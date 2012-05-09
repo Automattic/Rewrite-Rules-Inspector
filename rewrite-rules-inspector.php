@@ -26,16 +26,20 @@ class Rewrite_Rules_Inspector
 	 */
 	function __construct() {
 
-		// This plugin only runs in the admin
-		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
-		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
+		// This plugin only runs in the admin, but we need it initialized on init
+		add_action( 'init', array( $this, 'action_init' ) );
 
 	}
 
 	/**
-	 *
+	 * Initialize the plugin
 	 */
-	function action_admin_init() {
+	function action_init() {
+
+		if ( !is_admin() )
+			return;
+
+		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
 
 		// Allow the view to be placed elsewhere than tools.php
 		$this->parent_slug = apply_filters( 'rri_parent_slug', $this->parent_slug );
@@ -56,7 +60,7 @@ class Rewrite_Rules_Inspector
 	 */
 	function action_admin_menu() {
 
-		add_submenu_page( $this->parent_slug, __( 'Rewrite Rules', 'rewrite-rules-inspector' ), __( 'Rewrite Rules', 'rewrite-rules-inspector' ), $this->view_cap, $this->page_slug, array( $this, 'view_rules' ) );
+		add_submenu_page( $this->parent_slug, __( 'Rewrite Rules Inspector', 'rewrite-rules-inspector' ), __( 'Rewrite Rules', 'rewrite-rules-inspector' ), $this->view_cap, $this->page_slug, array( $this, 'view_rules' ) );
 
 	}
 
