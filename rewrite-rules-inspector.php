@@ -49,9 +49,9 @@ class Rewrite_Rules_Inspector
 
 		// User actions available for the rewrite rules page
 		if ( isset( $_GET['page'], $_GET['action'] ) && $_GET['page'] == $this->page_slug && $_GET['action'] == 'download-rules' )
-			$this->download_rules();
+			add_action( 'admin_init', array( $this, 'download_rules' ) );
 		elseif ( isset( $_GET['page'], $_GET['action'] ) && $_GET['page'] == $this->page_slug && $_GET['action'] == 'flush-rules' )
-			$this->flush_rules();
+			add_action( 'admin_init', array( $this, 'flush_rules' ) );
 
 	}
 
