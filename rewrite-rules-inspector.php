@@ -195,7 +195,7 @@ class Rewrite_Rules_Inspector
 		</style>
 		<div class="wrap">
 		<?php screen_icon( 'tools' ); ?>
-		<h2><?php _e( 'Rewrite Rules', 'rewrite-rules-inspector' ); ?></h2>
+		<h2><?php _e( 'Rewrite Rules Inspector', 'rewrite-rules-inspector' ); ?></h2>
 
 		<?php
 		$rules = $this->get_rules();
