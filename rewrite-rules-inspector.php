@@ -96,6 +96,22 @@ class Rewrite_Rules_Inspector
 				$rewrite_rules_array[$rule]['source'] = 'other';
 		}
 
+		// Find any rewrite rules that should've been generated but weren't
+		$maybe_missing = $wp_rewrite->rewrite_rules();
+		$missing_rules = array();
+		$rewrite_rules_array = array_reverse( $rewrite_rules_array, true );
+		foreach( $maybe_missing as $rule => $rewrite ) {
+			if ( !array_key_exists( $rule, $rewrite_rules_array ) ) {
+				$rewrite_rules_array[$rule] = array( 
+					'rewrite' => $rewrite,
+					'source' => 'missing',
+				);
+			}
+		}
+		// Prepend rules so it's obvious
+		$rewrite_rules_array = array_reverse( $rewrite_rules_array, true );
+
+		// Allow static sources of rewrite rules to override, etc.
 		$rewrite_rules_array = apply_filters( 'rri_rewrite_rules', $rewrite_rules_array );
 		// Set the sources used in our filtering
 		$sources = array( 'all' );
@@ -150,7 +166,7 @@ class Rewrite_Rules_Inspector
 				border-top-color: #F4E6F5;
 				border-bottom-color: #EFBBF2;
 			}
-			#the-list tr.type-missing {
+			#the-list tr.source-missing {
 				background-color: #f7a8a9;
 			}
 			#the-list tr.type-missing td {
@@ -164,8 +180,13 @@ class Rewrite_Rules_Inspector
 
 		<?php
 		$rules = $this->get_rules();
-		if ( empty( $rules ) )
-			echo '<div class="message error"><p>' . __( 'No rewrite rules yet, try flushing.', 'rewrite-rules-inspector' ) . '</p></div>';
+		if ( empty( $rules ) ) {
+			$error_message = apply_filters( 'rri_message_no_rules', __( 'No rewrite rules yet, try flushing.', 'rewrite-rules-inspector' ) );
+			echo '<div class="message error"><p>' . $error_message . '</p></div>';
+		} else if ( in_array( 'missing', $this->sources ) ) {
+			$error_message = apply_filters( 'rri_message_missing_rules', __( 'Some rewrite rules may be missing, try flushing.', 'rewrite-rules-inspector' ) );
+			echo '<div class="message error"><p>' . $error_message . '</p></div>';
+		}
 		?>
 
 		<?php if ( ! empty( $_GET['s'] ) ): ?>
