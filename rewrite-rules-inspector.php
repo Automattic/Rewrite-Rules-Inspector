@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Rewrite Rules Inspector
- * Plugin URI: http://automattic.com
+ * Plugin URI: http://wordpress.org/extend/plugins/rewrite-rules-inspector/
  * Description: Simple WordPress Admin view for inspecting your rewrite rules
  * Author: Daniel Bachhuber, Automattic
  * Version: 1.0
