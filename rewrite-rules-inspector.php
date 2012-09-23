@@ -145,12 +145,12 @@ class Rewrite_Rules_Inspector
 		foreach( $rewrite_rules_array as $rule => $data ) {
 			// If we're searching rules based on URL and there's no match, don't return it
 			if ( ! empty( $_GET['s'] ) ) {
-				$uri = parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
+				$match_path = parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
 				if ( ! empty( $wordpress_subdir_for_site ) ) {
-					$uri = str_replace( $wordpress_subdir_for_site, '', $uri );
+					$match_path = str_replace( $wordpress_subdir_for_site, '', $match_path );
 				}
-				$uri = ltrim( $uri, '/' );
-				if ( !preg_match( "!^$rule!", $uri ) )
+				$match_path = ltrim( $match_path, '/' );
+				if ( !preg_match( "!^$rule!", $match_path ) )
 					unset( $rewrite_rules_array[$rule] );
 			}
 			// Filter by source if necessary
