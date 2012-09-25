@@ -21,6 +21,7 @@ Originally developed for [WordPress.com VIP](http://vip.wordpress.com/)-hosted c
 == Changelog == 
 
 = 1.1 (Sept. 25, 2012) =
+* Support for route matching when WordPress lives in a subdirectory. Props [dbernar1](https://github.com/dbernar1)
 * Display a success message after you've flushed your rewrite rules
 
 = 1.0 (May 9, 2012) =
