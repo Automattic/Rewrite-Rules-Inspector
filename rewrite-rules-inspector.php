@@ -52,6 +52,8 @@ class Rewrite_Rules_Inspector
 			add_action( 'admin_init', array( $this, 'download_rules' ) );
 		elseif ( isset( $_GET['page'], $_GET['action'] ) && $_GET['page'] == $this->page_slug && $_GET['action'] == 'flush-rules' )
 			add_action( 'admin_init', array( $this, 'flush_rules' ) );
+		elseif ( isset( $_GET['page'], $_GET['message'] ) && $_GET['page'] == $this->page_slug && $_GET['message'] == 'flush-success' )
+			add_action( 'admin_notices', array( $this, 'action_admin_notices' ) );
 
 	}
 
@@ -62,6 +64,13 @@ class Rewrite_Rules_Inspector
 
 		add_submenu_page( $this->parent_slug, __( 'Rewrite Rules Inspector', 'rewrite-rules-inspector' ), __( 'Rewrite Rules', 'rewrite-rules-inspector' ), $this->view_cap, $this->page_slug, array( $this, 'view_rules' ) );
 
+	}
+
+	/**
+	 * Show a message when you've successfully flushed your rewrite rules
+	 */
+	function action_admin_notices() {
+		echo '<div class="message updated"><p>' . __( 'Rewrite rules flushed.', 'rewrite-rules-inspector' ) . '</p></div>';
 	}
 
 	/**

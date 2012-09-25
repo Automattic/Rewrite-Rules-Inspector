@@ -20,6 +20,9 @@ Originally developed for [WordPress.com VIP](http://vip.wordpress.com/)-hosted c
 
 == Changelog == 
 
+= 1.1 (Sept. 25, 2012) =
+* Display a success message after you've flushed your rewrite rules
+
 = 1.0 (May 9, 2012) =
 * Initial public release!
 * View a listing of all your rewrite rules
