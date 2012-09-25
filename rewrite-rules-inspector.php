@@ -4,11 +4,11 @@
  * Plugin URI: http://wordpress.org/extend/plugins/rewrite-rules-inspector/
  * Description: Simple WordPress Admin view for inspecting your rewrite rules
  * Author: Daniel Bachhuber, Automattic
- * Version: 1.0
+ * Version: 1.1
  * Author URI: http://automattic.com/
  */
 
-define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.0' );
+define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.1' );
 define( 'REWRITE_RULES_INSPECTOR_ROOT', dirname( __FILE__ ) );
 define( 'REWRITE_RULES_INSPECTOR_FILE_PATH' , REWRITE_RULES_INSPECTOR_ROOT . '/' . basename( __FILE__ ) );
 
