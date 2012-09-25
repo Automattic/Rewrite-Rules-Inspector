@@ -148,23 +148,25 @@ class Rewrite_Rules_Inspector
 		}
 		$this->sources = array_unique( $sources );
 
+		if ( ! empty( $_GET['s'] ) ) {
+			$match_path = parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
+			$wordpress_subdir_for_site = parse_url( home_url(), PHP_URL_PATH );
+			if ( ! empty( $wordpress_subdir_for_site ) ) {
+				$match_path = str_replace( $wordpress_subdir_for_site, '', $match_path );
+			}
+			$match_path = ltrim( $match_path, '/' );
+		}
+
+		$should_filter_by_source = ! empty( $_GET['source'] ) && 'all' !== $_GET[ 'source' ] && in_array( $_GET['source'], $this->sources );
+
 		// Filter based on match or source if necessary
 		foreach( $rewrite_rules_array as $rule => $data ) {
 			// If we're searching rules based on URL and there's no match, don't return it
-			if ( ! empty( $_GET['s'] ) ) {
-				$uri = parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
-				$uri = ltrim( $uri, '/' );
-				if ( !preg_match( "!^$rule!", $uri ) )
-					unset( $rewrite_rules_array[$rule] );
-			}
-			// Filter by source if necessary
-			if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $this->sources ) )
-				$filter_source = sanitize_key( $_GET['source'] );
-			else
-				$filter_source = 'all';
-			if ( $filter_source != 'all' && $rewrite_rules_array[$rule]['source'] != $filter_source )
+			if ( ! empty( $match_path ) && ! preg_match( "!^$rule!", $match_path ) ) {
 				unset( $rewrite_rules_array[$rule] );
-			
+			} elseif ( $should_filter_by_source && $data['source'] != $_GET['source'] ) {
+				unset( $rewrite_rules_array[$rule] );
+			}
 		}
 
 		// Return our array of rewrite rules to be used
