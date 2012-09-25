@@ -327,7 +327,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 	 * What to print when no items were found
 	 */
 	function no_items() {
-		echo _e( 'No rewrite rules were found.', 'rewrite-rules-inspector' );
+		_e( 'No rewrite rules were found.', 'rewrite-rules-inspector' );
 	}
 
 	/**
