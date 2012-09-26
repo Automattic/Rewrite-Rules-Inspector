@@ -3,7 +3,7 @@ Contributors: danielbachhuber, automattic
 Tags: rewrite rules, tools
 Tested up to: 3.4.2
 Requires at least: 3.1
-Stable tag: 1.0
+Stable tag: 1.1
 
 Straightforward WordPress admin tool for inspecting your rewrite rules
 
