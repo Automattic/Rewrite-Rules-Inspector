@@ -3,7 +3,7 @@ Contributors: danielbachhuber, automattic
 Tags: rewrite rules, tools
 Tested up to: 3.5.1
 Requires at least: 3.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 Straightforward WordPress admin tool for inspecting your rewrite rules
 
@@ -18,7 +18,10 @@ Originally developed for [WordPress.com VIP](http://vip.wordpress.com/)-hosted c
 1. See which rewrite rules match a given URL (and the priorites they match in)
 1. Error message appears if rewrite rules are missing in the database
 
-== Changelog == 
+== Changelog ==
+
+= 1.2 (Jan. 16, 2013) =
+* Modify the rewrite rule source with a filter. Props [jeremyfelt](https://github.com/jeremyfelt)
 
 = 1.1 (Sept. 25, 2012) =
 * Support for route matching when WordPress lives in a subdirectory. Props [dbernar1](https://github.com/dbernar1)
