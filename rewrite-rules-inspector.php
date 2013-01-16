@@ -121,7 +121,7 @@ class Rewrite_Rules_Inspector
 				}
 			}
 			if ( !isset( $rewrite_rules_array[$rule]['source'] ) )
-				$rewrite_rules_array[$rule]['source'] = 'other';
+				$rewrite_rules_array[$rule]['source'] = apply_filters( 'rewrite_rules_inspector_source', 'other', $rule, $rewrite );
 		}
 
 		// Find any rewrite rules that should've been generated but weren't
