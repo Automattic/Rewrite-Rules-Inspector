@@ -16,7 +16,7 @@ Originally developed for [WordPress.com VIP](http://vip.wordpress.com/)-hosted c
 == Screenshots ==
 
 1. See which rewrite rules match a given URL (and the priorites they match in)
-1. Error message appears if rewrite rules are missing in the database
+2. Error message appears if rewrite rules are missing in the database
 
 == Changelog ==
 
