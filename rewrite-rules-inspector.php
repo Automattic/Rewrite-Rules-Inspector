@@ -420,17 +420,19 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 	 */
 	function display_rows() {
 		foreach ( $this->items as $rewrite_rule => $rewrite_data ) {
-			$this->single_row( $rewrite_rule, $rewrite_data );
+			$rewrite_data['rule'] = $rewrite_rule;
+			$this->single_row( $rewrite_data );
 		}
 	}
 
 	/**
 	 * Display a single row of rewrite rule data
 	 */
-	function single_row( $rule, $data ) {
+	function single_row( $item ) {
 
-		$source = $data['source'];
-		$rewrite = $data['rewrite'];
+		$rule = $item['rule'];
+		$source = $item['source'];
+		$rewrite = $item['rewrite'];
 
 		$class = 'source-' . $source;
 
