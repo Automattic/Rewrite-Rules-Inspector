@@ -1,9 +1,9 @@
 === Rewrite Rules Inspector ===
-Contributors: danielbachhuber, automattic
+Contributors: danielbachhuber, automattic, tmoorewp
 Tags: rewrite rules, tools
 Tested up to: 3.5.1
 Requires at least: 3.1
-Stable tag: 1.2
+Stable tag: 1.2.1
 
 Straightforward WordPress admin tool for inspecting your rewrite rules
 
@@ -19,6 +19,9 @@ Originally developed for [WordPress.com VIP](http://vip.wordpress.com/)-hosted c
 2. Error message appears if rewrite rules are missing in the database
 
 == Changelog ==
+
+= 1.2.1 (Sept. 19, 2013) =
+* Fix for strict standards error in declaration of Rewrite_Rules_Inspector_List_Table::single_row(). props @simonhampel
 
 = 1.2 (Jan. 16, 2013) =
 * Modify the rewrite rule source with a filter. Props [jeremyfelt](https://github.com/jeremyfelt)

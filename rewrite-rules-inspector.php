@@ -4,11 +4,11 @@
  * Plugin URI: http://wordpress.org/extend/plugins/rewrite-rules-inspector/
  * Description: Simple WordPress Admin view for inspecting your rewrite rules
  * Author: Daniel Bachhuber, Automattic
- * Version: 1.2
+ * Version: 1.2.1
  * Author URI: http://automattic.com/
  */
 
-define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.2' );
+define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.2.1' );
 define( 'REWRITE_RULES_INSPECTOR_ROOT', dirname( __FILE__ ) );
 define( 'REWRITE_RULES_INSPECTOR_FILE_PATH' , REWRITE_RULES_INSPECTOR_ROOT . '/' . basename( __FILE__ ) );
 
@@ -130,7 +130,7 @@ class Rewrite_Rules_Inspector
 		$rewrite_rules_array = array_reverse( $rewrite_rules_array, true );
 		foreach( $maybe_missing as $rule => $rewrite ) {
 			if ( !array_key_exists( $rule, $rewrite_rules_array ) ) {
-				$rewrite_rules_array[$rule] = array( 
+				$rewrite_rules_array[$rule] = array(
 					'rewrite' => $rewrite,
 					'source' => 'missing',
 				);
@@ -171,7 +171,7 @@ class Rewrite_Rules_Inspector
 
 		// Return our array of rewrite rules to be used
 		return $rewrite_rules_array;
-		
+
 	}
 
 	/**
@@ -230,7 +230,7 @@ class Rewrite_Rules_Inspector
 		</div>
 
 	<?php
-		
+
 	}
 
 	/**
@@ -246,7 +246,7 @@ class Rewrite_Rules_Inspector
 			wp_die( __( 'You do not have permissions to perform this action.' ) );
 
 		// Get the rewrite rules and prompt the user to download them
-		// File is saved as YYYYMMDD.themename.rewriterules.txt	
+		// File is saved as YYYYMMDD.themename.rewriterules.txt
 		$theme_name = sanitize_key( get_option( 'stylesheet' ) );
 		$filename = date( 'Ymd' ) . '.' . $theme_name . '.rewriterules.txt';
 		header( 'Content-Type: text/plain' );
@@ -359,7 +359,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 			<?php endif; ?>
 			<?php
 				// Prepare the link to download a set of rules
-				// Link is contingent on the current filter state	
+				// Link is contingent on the current filter state
 				$args = array(
 					'action' => 'download-rules',
 					'_wpnonce' => wp_create_nonce( 'download-rules' ),
@@ -369,7 +369,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 				else
 					$args['source'] = 'all';
 				$args['s'] = !empty( $_GET['s'] ) ? $_GET['s'] : '';
-				
+
 				$download_url = add_query_arg( $args, menu_page_url( $plugin_page, false ) );
 			?>
 			<a title="<?php _e( 'Download current list of rules as a .txt file', 'rewrite-rules-inspector' ); ?>" class="button-secondary" href="<?php echo esc_url( $download_url ); ?>"><?php _e( 'Download', 'rewrite-rules-inspector' ); ?></a>
