@@ -1,7 +1,7 @@
 === Rewrite Rules Inspector ===
 Contributors: danielbachhuber, automattic, tmoorewp
 Tags: rewrite rules, tools
-Tested up to: 3.5.1
+Tested up to: 4.8
 Requires at least: 3.1
 Stable tag: 1.2.1
 
