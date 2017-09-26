@@ -210,11 +210,19 @@ class Rewrite_Rules_Inspector
 
 		<?php
 		$rules = $this->get_rules();
+		
+		$missing_count = 0;
+		foreach( $rules as $regex => $rule ) {
+			if ( 'missing' === $rules[ $regex ]['source'] ) {
+				$missing_count++;
+			}
+		}
+
 		if ( empty( $rules ) ) {
 			$error_message = apply_filters( 'rri_message_no_rules', __( 'No rewrite rules yet, try flushing.', 'rewrite-rules-inspector' ) );
 			echo '<div class="message error"><p>' . $error_message . '</p></div>';
 		} else if ( in_array( 'missing', $this->sources ) ) {
-			$error_message = apply_filters( 'rri_message_missing_rules', __( 'Some rewrite rules may be missing, try flushing.', 'rewrite-rules-inspector' ) );
+			$error_message = apply_filters( 'rri_message_missing_rules', sprintf( _n( '%d rewrite rule may be missing, try flushing.', '%d rewrite rules may be missing, try flushing.', $missing_count, 'rewrite-rules-inspector' ), $missing_count ) );
 			echo '<div class="message error"><p>' . $error_message . '</p></div>';
 		}
 		?>
