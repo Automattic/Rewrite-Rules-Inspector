@@ -363,7 +363,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 					);
 				$flush_url = add_query_arg( $args, menu_page_url( $plugin_page, false ) );
 			?>
-			<a title="<?php _e( 'Flush your rewrite rules to regenerate them', 'rewrite-rules-inspector' ); ?>" class="button-secondary" href="<?php echo esc_url( $flush_url ); ?>"><?php _e( 'Flush Rules', 'rewrite-rules-inspector' ); ?></a>
+			<a title="<?php esc_attr_e( 'Flush your rewrite rules to regenerate them', 'rewrite-rules-inspector' ); ?>" class="button-secondary" href="<?php echo esc_url( $flush_url ); ?>"><?php _e( 'Flush Rules', 'rewrite-rules-inspector' ); ?></a>
 			<?php endif; ?>
 			<?php
 				// Prepare the link to download a set of rules
@@ -380,7 +380,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 
 				$download_url = add_query_arg( $args, menu_page_url( $plugin_page, false ) );
 			?>
-			<a title="<?php _e( 'Download current list of rules as a .txt file', 'rewrite-rules-inspector' ); ?>" class="button-secondary" href="<?php echo esc_url( $download_url ); ?>"><?php _e( 'Download', 'rewrite-rules-inspector' ); ?></a>
+			<a title="<?php esc_attr_e( 'Download current list of rules as a .txt file', 'rewrite-rules-inspector' ); ?>" class="button-secondary" href="<?php echo esc_url( $download_url ); ?>"><?php _e( 'Download', 'rewrite-rules-inspector' ); ?></a>
 		</div>
 		<form method="GET">
 			<label for="s"><?php _e( 'Match URL:', 'rewrite-rules-inspector' ); ?></label>
