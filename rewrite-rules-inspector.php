@@ -178,11 +178,12 @@ class Rewrite_Rules_Inspector
 	 * View the rewrite rules for the site
 	 */
 	function view_rules() {
+		$rules = $this->get_rules();
 
 		// Bump view stats or do something else on page load
-		do_action( 'rri_view_rewrite_rules' );
+		do_action( 'rri_view_rewrite_rules', $rules );
 
-		$wp_list_table = new Rewrite_Rules_Inspector_List_Table();
+		$wp_list_table = new Rewrite_Rules_Inspector_List_Table( $rules );
 		$wp_list_table->prepare_items();
 
 		?>
@@ -208,8 +209,6 @@ class Rewrite_Rules_Inspector
 		<h2><?php _e( 'Rewrite Rules Inspector', 'rewrite-rules-inspector' ); ?></h2>
 
 		<?php
-		$rules = $this->get_rules();
-		
 		$missing_count = 0;
 		foreach( $rules as $regex => $rule ) {
 			if ( 'missing' === $rules[ $regex ]['source'] ) {
@@ -307,9 +306,8 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 	/**
 	 * Construct the list table
 	 */
-	function __construct() {
-
-		$screen = get_current_screen();
+	function __construct( $rules ) {
+		$this->items = $rules;
 
 		parent::__construct( array(
 			'plural' => 'Rewrite Rules',
@@ -320,14 +318,10 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 	 * Load all of the matching rewrite rules into our list table
 	 */
 	function prepare_items() {
-		global $rewrite_rules_inspector;
-
 		$columns = $this->get_columns();
 		$hidden = array();
 		$sortable = array();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
-
-		$this->items = $rewrite_rules_inspector->get_rules();
 	}
 
 	/**
