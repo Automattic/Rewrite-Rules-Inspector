@@ -211,8 +211,8 @@ class Rewrite_Rules_Inspector
 		$rules = $this->get_rules();
 		
 		$missing_count = 0;
-		foreach( $rules as $regex => $rule ) {
-			if ( 'missing' === $rules[ $regex ]['source'] ) {
+		foreach( $rules as $rule ) {
+			if ( 'missing' === $rule['source'] ) {
 				$missing_count++;
 			}
 		}
