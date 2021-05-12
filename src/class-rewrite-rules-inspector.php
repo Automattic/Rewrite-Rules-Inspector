@@ -143,8 +143,10 @@ class Rewrite_Rules_Inspector {
 
 		// Apply the filters used in core just in case.
 		foreach ( $rewrite_rules_by_source as $source => $rules ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- core hook.
 			$rewrite_rules_by_source[ $source ] = apply_filters( $source . '_rewrite_rules', $rules );
 			if ( 'post_tag' === $source ) {
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- core hook.
 				$rewrite_rules_by_source[ $source ] = apply_filters( 'tag_rewrite_rules', $rules );
 			}
 		}
@@ -208,7 +210,6 @@ class Rewrite_Rules_Inspector {
 
 		// Return our array of rewrite rules to be used.
 		return $rewrite_rules_array;
-
 	}
 
 	/**
