@@ -92,7 +92,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 				);
 
 				$args['source'] = 'all';
-				if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $rewrite_rules_inspector->sources ) ) {
+				if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $rewrite_rules_inspector->sources, true ) ) {
 					$args['source'] = sanitize_key( $_GET['source'] );
 				}
 				$args['s'] = ! empty( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
@@ -172,7 +172,6 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 		list( $columns, $hidden ) = $this->get_column_info();
 
 		foreach ( $columns as $column_name => $column_display_name ) {
-
 			switch ( $column_name ) {
 				case 'rule':
 					echo '<td class="column-rule"><strong>', esc_html( $rule ), '</strong></td>';
