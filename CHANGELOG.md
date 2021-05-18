@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2021-05-18
+- Add the count of missing rules.
+- Add license file, changelog, .editorconfig file, PHPCS config file, and GitHub Action to deploy to WordPress.org.
+- Add Composer support.
+- Use optimized call of `get_rules()`.
+- Update admin screen title to use level 1 heading.
+- Update documentation and screenshots. 
+- Move classes to their own file.
+- Fix some incorrect escapings.
+- Fix issues with negative lookarounds by changing regex delimiter.
+- Fix many coding standards violations.
+- Remove call to deprecated `screen_icon()` function.
+
 ## [1.2.1] - 2013-09-19
 - Fix for strict standards error in declaration of `Rewrite_Rules_Inspector_List_Table::single_row()`. Props [simonhampel](https://github.com/simonhampel).
 
@@ -21,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Filter by different sources of rewrite rules.
 - An error message appears if rewrite rules are missing in the database.
 
+[1.3.0]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.2...1.2.1
 [1.2]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.1...1.2
 [1.1]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.0...1.1
