@@ -1,12 +1,12 @@
 # Rewrite Rules Inspector
 
-Stable tag: 1.3.0  
+Stable tag: 1.3.1  
 Requires at least: 3.1  
 Tested up to: 5.7  
 Requires PHP: 5.6  
 License: GPLv2 or later  
 Tags: rewrite rules, tools  
-Contributors: danielbachhuber, automattic, tmoorewp
+Contributors: danielbachhuber, automattic, tmoorewp, GaryJ
 
 A simple admin tool for inspecting rewrite rules.
 
