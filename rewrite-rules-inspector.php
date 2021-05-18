@@ -42,3 +42,19 @@ add_action(
 		$rewrite_rules_inspector->run();
 	}
 );
+
+add_action( 'init', 'rri_load_textdomain' );
+/**
+ * Load plugin textdomain.
+ *
+ * Only look for WP_LANG_DIR . '/plugins/rewrite-rules-inspector-' . $locale . '.mo'.
+ * WP_LANG_DIR is usually WP_CONTENT_DIR . '/languages/'.
+ * No other fallback location is supported.
+ *
+ * This can be removed once minimum supported WordPress is 4.6 or later.
+ *
+ * @since 1.3.1
+ */
+function rri_load_textdomain() {
+	load_plugin_textdomain( 'rewrite-rules-inspector' );
+}
