@@ -5,6 +5,7 @@
 	"homepage": "https://wordpress.org/plugins/rewrite-rules-inspector/",
 	"license": "GPL-2.0-or-later",
 	"require": {
+		"php": ">=7.4",
 		"composer/installers": "^1.0"
 	}
 }

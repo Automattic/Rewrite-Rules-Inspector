@@ -1,9 +1,9 @@
 # Rewrite Rules Inspector
 
 Stable tag: 1.3.1  
-Requires at least: 3.1  
-Tested up to: 5.7  
-Requires PHP: 5.6  
+Requires at least: 5.9  
+Tested up to: 6.5  
+Requires PHP: 7.4  
 License: GPLv2 or later  
 Tags: rewrite rules, tools  
 Contributors: danielbachhuber, automattic, tmoorewp, GaryJ
