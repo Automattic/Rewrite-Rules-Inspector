@@ -1,17 +1,19 @@
 name: Deploy to WordPress.org
 on:
-  push:
-    tags:
-      - "*"
+  release:
+    types: [released]
+  # Allow manual triggering of the workflow.
+  workflow_dispatch:
 jobs:
-  tag:
-    name: New tag
+  release:
+    name: New release to WordPress.org
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: WordPress Plugin Deploy
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Push to WordPress.org
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
+          SLUG: rewrite-rules-inspector
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: rewrite-rules-inspector
