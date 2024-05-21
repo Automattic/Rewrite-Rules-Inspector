@@ -1,6 +1,6 @@
 # Rewrite Rules Inspector
 
-Stable tag: 1.3.1  
+Stable tag: 1.4.0  
 Requires at least: 5.9  
 Tested up to: 6.5  
 Requires PHP: 7.4  
