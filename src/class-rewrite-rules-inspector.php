@@ -165,7 +165,6 @@ class Rewrite_Rules_Inspector {
 
 		// Find any rewrite rules that should've been generated but weren't.
 		$maybe_missing       = $wp_rewrite->rewrite_rules();
-		$missing_rules       = array();
 		$rewrite_rules_array = array_reverse( $rewrite_rules_array, true );
 		foreach ( $maybe_missing as $rule => $rewrite ) {
 			if ( ! array_key_exists( $rule, $rewrite_rules_array ) ) {
