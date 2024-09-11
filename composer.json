@@ -8,6 +8,9 @@
 		"php": ">=7.4",
 		"composer/installers": "^1 || ^2"
 	},
+	"require-dev": {
+		"rector/rector": "^1.2"
+	},
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true
