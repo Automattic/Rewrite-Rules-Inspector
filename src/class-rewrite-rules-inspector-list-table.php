@@ -82,8 +82,8 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 					$flush_url = add_query_arg( $args, menu_page_url( $plugin_page, false ) );
 					?>
 					<a title="<?php esc_attr_e( 'Flush your rewrite rules to regenerate them', 'rewrite-rules-inspector' ); ?>" class="button-secondary" href="<?php echo esc_url( $flush_url ); ?>"><?php esc_html_e( 'Flush Rules', 'rewrite-rules-inspector' ); ?></a>
-				<?php endif; ?>
-				<?php
+				<?php endif;
+
 				// Prepare the link to download a set of rules.
 				// Link is contingent on the current filter state.
 				$args = array(
@@ -95,6 +95,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 				if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $rewrite_rules_inspector->sources, true ) ) {
 					$args['source'] = sanitize_key( $_GET['source'] );
 				}
+
 				$args['s'] = empty( $_GET['s'] ) ? '' : sanitize_text_field( $_GET['s'] );
 
 				$download_url = add_query_arg( $args, menu_page_url( $plugin_page, false ) );
@@ -112,6 +113,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 					if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $rewrite_rules_inspector->sources, true ) ) {
 						$filter_source = sanitize_key( $_GET['source'] );
 					}
+
 					foreach ( $rewrite_rules_inspector->sources as $value ) {
 						echo '<option value="' . esc_attr( $value ) . '" ';
 						selected( $filter_source, $value );
@@ -122,7 +124,8 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 				<?php submit_button( __( 'Filter', 'rewrite-rules-inspector' ), 'primary', null, false ); ?>
 				<?php if ( $search || ! empty( $_GET['source'] ) ) : ?>
 					<a href="<?php echo esc_url( menu_page_url( $plugin_page, false ) ); ?>" class="button-secondary"><?php esc_html_e( 'Reset', 'rewrite-rules-inspector' ); ?></a>
-				<?php endif; ?>
+				<?php endif;
+      		?>
 			</form>
 		</div>
 		<?php

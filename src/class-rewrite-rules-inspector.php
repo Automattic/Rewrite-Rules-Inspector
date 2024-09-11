@@ -117,6 +117,7 @@ class Rewrite_Rules_Inspector {
 		if ( ! $rewrite_rules ) {
 			$rewrite_rules = array();
 		}
+
 		// Track down which rewrite rules are associated with which methods by breaking it down.
 		$rewrite_rules_by_source             = array();
 		$rewrite_rules_by_source['post']     = $wp_rewrite->generate_rewrite_rules( $wp_rewrite->permalink_structure, EP_PERMALINK );
@@ -158,6 +159,7 @@ class Rewrite_Rules_Inspector {
 					$rewrite_rules_array[ $rule ]['source'] = $source;
 				}
 			}
+
 			if ( ! isset( $rewrite_rules_array[ $rule ]['source'] ) ) {
 				$rewrite_rules_array[ $rule ]['source'] = apply_filters( 'rewrite_rules_inspector_source', 'other', $rule, $rewrite );
 			}
@@ -174,6 +176,7 @@ class Rewrite_Rules_Inspector {
 				);
 			}
 		}
+
 		// Prepend rules so it's obvious.
 		$rewrite_rules_array = array_reverse( $rewrite_rules_array, true );
 
@@ -184,6 +187,7 @@ class Rewrite_Rules_Inspector {
 		foreach ( $rewrite_rules_array as $rule => $data ) {
 			$sources[] = $data['source'];
 		}
+
 		$this->sources = array_unique( $sources );
 
 		if ( ! empty( $_GET['s'] ) ) {
@@ -192,6 +196,7 @@ class Rewrite_Rules_Inspector {
 			if ( ! empty( $wordpress_subdir_for_site ) ) {
 				$match_path = str_replace( $wordpress_subdir_for_site, '', $match_path );
 			}
+
 			$match_path = ltrim( $match_path, '/' );
 		}
 
@@ -200,7 +205,7 @@ class Rewrite_Rules_Inspector {
 		// Filter based on match or source if necessary.
 		foreach ( $rewrite_rules_array as $rule => $data ) {
 			// If we're searching rules based on URL and there's no match, don't return it.
-			if ( $match_path !== '' && $match_path !== '0' && ! preg_match( "#^$rule#", $match_path ) ) {
+			if ( $match_path !== '' && $match_path !== '0' && ! preg_match( sprintf('#^%s#', $rule), $match_path ) ) {
 				unset( $rewrite_rules_array[ $rule ] );
 			} elseif ( $should_filter_by_source && $data['source'] !== $_GET['source'] ) {
 				unset( $rewrite_rules_array[ $rule ] );
@@ -279,10 +284,10 @@ class Rewrite_Rules_Inspector {
 					printf( esc_html__( 'A listing of all %1$s rewrite rules for this site.', 'rewrite-rules-inspector' ), count( $wp_list_table->items ) );
 					?>
 				</p>
-			<?php endif; ?>
+			<?php endif;
 
-			<?php $wp_list_table->display(); ?>
-
+			$wp_list_table->display();
+			?>
 		</div>
 		<?php
 	}
@@ -314,6 +319,7 @@ class Rewrite_Rules_Inspector {
 		foreach ( $rewrite_rules as $rule => $data ) {
 			$rules_to_export[ $rule ] = $data['rewrite'];
 		}
+
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.PHP.DevelopmentFunctions.error_log_var_export
 		echo var_export( $rules_to_export, true );
 		exit;
