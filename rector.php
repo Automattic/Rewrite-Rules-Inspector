@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php54\Rector\Array_\LongArrayToShortArrayRector;
 use Rector\Php82\Rector\Encapsed\VariableInStringInterpolationFixerRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Php84\Rector\Param\ExplicitNullableParamTypeRector;
@@ -19,7 +20,7 @@ return RectorConfig::configure()
 			LongArrayToShortArrayRector::class,
 		)
 	)
-	->withPhpSets( php54: true )
+	->withPhpSets( php71: true )
 	// Changes from later PHP Sets that are backwards compatible:
 //	->withRules(
 //		array(

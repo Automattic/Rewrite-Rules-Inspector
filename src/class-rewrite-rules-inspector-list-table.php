@@ -169,7 +169,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 
 		echo '<tr class="', esc_attr( $class ), '">';
 
-		list( $columns, $hidden ) = $this->get_column_info();
+		[$columns, $hidden] = $this->get_column_info();
 
 		foreach ( $columns as $column_name => $column_display_name ) {
 			switch ( $column_name ) {
