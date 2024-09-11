@@ -36,7 +36,7 @@ require __DIR__ . '/src/class-rewrite-rules-inspector-list-table.php';
 
 add_action(
 	'plugins_loaded',
-	function() {
+	function(): void {
 		global $rewrite_rules_inspector;
 		$rewrite_rules_inspector = new Rewrite_Rules_Inspector();
 		$rewrite_rules_inspector->run();

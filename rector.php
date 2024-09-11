@@ -35,5 +35,5 @@ return RectorConfig::configure()
 		)
 	)
 //	->withPreparedSets( deadCode: true, codeQuality: true, instanceOf: true, codingStyle: true )
-//	->withTypeCoverageLevel( 1 )
+	->withTypeCoverageLevel( 1 )
 	;
