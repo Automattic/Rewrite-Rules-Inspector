@@ -34,6 +34,6 @@ return RectorConfig::configure()
 			ExplicitNullableParamTypeRector::class,
 		)
 	)
-	->withPreparedSets( deadCode: true/*, codeQuality: true, instanceOf: true, codingStyle: true */ )
+	->withPreparedSets( deadCode: true, codeQuality: true/*, instanceOf: true, codingStyle: true */ )
 	->withTypeCoverageLevel( 1 )
 	;

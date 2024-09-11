@@ -200,7 +200,7 @@ class Rewrite_Rules_Inspector {
 		// Filter based on match or source if necessary.
 		foreach ( $rewrite_rules_array as $rule => $data ) {
 			// If we're searching rules based on URL and there's no match, don't return it.
-			if ( ! empty( $match_path ) && ! preg_match( "#^$rule#", $match_path ) ) {
+			if ( $match_path !== '' && $match_path !== '0' && ! preg_match( "#^$rule#", $match_path ) ) {
 				unset( $rewrite_rules_array[ $rule ] );
 			} elseif ( $should_filter_by_source && $data['source'] !== $_GET['source'] ) {
 				unset( $rewrite_rules_array[ $rule ] );

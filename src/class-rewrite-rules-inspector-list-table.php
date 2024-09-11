@@ -60,7 +60,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 	public function display_tablenav( $which ) {
 		global $plugin_page, $rewrite_rules_inspector;
 
-		$search = ! empty( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
+		$search = empty( $_GET['s'] ) ? '' : sanitize_text_field( $_GET['s'] );
 
 		if ( 'bottom' === $which ) {
 			return false;
@@ -95,7 +95,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 				if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $rewrite_rules_inspector->sources, true ) ) {
 					$args['source'] = sanitize_key( $_GET['source'] );
 				}
-				$args['s'] = ! empty( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
+				$args['s'] = empty( $_GET['s'] ) ? '' : sanitize_text_field( $_GET['s'] );
 
 				$download_url = add_query_arg( $args, menu_page_url( $plugin_page, false ) );
 				?>
@@ -126,6 +126,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 			</form>
 		</div>
 		<?php
+		return true;
 	}
 
 	/**
