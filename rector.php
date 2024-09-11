@@ -20,20 +20,20 @@ return RectorConfig::configure()
 			LongArrayToShortArrayRector::class,
 		)
 	)
-	->withPhpSets( php71: true )
+	->withPhpSets( php74: true )
 	// Changes from later PHP Sets that are backwards compatible:
-//	->withRules(
-//		array(
-//			// 8.2
-//			VariableInStringInterpolationFixerRector::class,
-//
-//			// 8.3
-//			AddOverrideAttributeToOverriddenMethodsRector::class,
-//
-//			// 8.4
-//			ExplicitNullableParamTypeRector::class,
-//		)
-//	)
+	->withRules(
+		array(
+			// 8.2
+			VariableInStringInterpolationFixerRector::class,
+
+			// 8.3
+			AddOverrideAttributeToOverriddenMethodsRector::class,
+
+			// 8.4
+			ExplicitNullableParamTypeRector::class,
+		)
+	)
 //	->withPreparedSets( deadCode: true, codeQuality: true, instanceOf: true, codingStyle: true )
 //	->withTypeCoverageLevel( 1 )
 	;
