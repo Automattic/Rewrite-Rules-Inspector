@@ -56,6 +56,9 @@ class Rewrite_Rules_Inspector {
 	public function run() {
 		// This plugin only runs in the admin, but we need it initialized on init.
 		add_action( 'init', array( $this, 'action_init' ) );
+		
+		// Register and enqueue admin styles.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 	}
 
 	/**
@@ -84,6 +87,41 @@ class Rewrite_Rules_Inspector {
 		} elseif ( isset( $_GET['page'], $_GET['message'] ) && $_GET['page'] === $this->page_slug && 'flush-success' === $_GET['message'] ) {
 			add_action( 'admin_notices', array( $this, 'action_admin_notices' ) );
 		}
+	}
+
+	/**
+	 * Enqueue admin styles and scripts for the rewrite rules inspector page.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $hook_suffix The current admin page hook suffix.
+	 */
+	public function enqueue_admin_styles( $hook_suffix ) {
+		// Only enqueue on our admin page.
+		if ( 'tools_page_' . $this->page_slug !== $hook_suffix ) {
+			return;
+		}
+
+		$css_url = plugin_dir_url( __DIR__ ) . 'assets/css/admin.css';
+		$js_url = plugin_dir_url( __DIR__ ) . 'assets/js/admin.js';
+		$version = REWRITE_RULES_INSPECTOR_VERSION;
+
+		// Enqueue styles.
+		wp_enqueue_style(
+			'rewrite-rules-inspector-admin',
+			$css_url,
+			array(),
+			$version
+		);
+
+		// Enqueue scripts.
+		wp_enqueue_script(
+			'rewrite-rules-inspector-admin',
+			$js_url,
+			array( 'jquery' ),
+			$version,
+			true
+		);
 	}
 
 	/**
@@ -428,35 +466,7 @@ class Rewrite_Rules_Inspector {
 		$wp_list_table->prepare_items();
 
 		?>
-		<style>
-			#the-list tr.type-sunrise,
-			#the-list tr.type-custom {
-				background-color: #eec7f0;
-			}
-			#the-list tr.type-sunrise td,
-			#the-list tr.type-custom td {
-				border-top-color: #f4e6f5;
-				border-bottom-color: #efbbf2;
-			}
-			#the-list tr.source-missing {
-				background-color: #f7a8a9;
-			}
-			#the-list tr.type-missing td {
-				border-top-color: #fecfd0;
-				border-bottom-color: #f99b9d;
-			}
-			#permastructs-section {
-				margin-top: 30px;
-			}
-			.permastruct-structure {
-				font-family: monospace;
-				background: #f6f7f7;
-				padding: 2px 6px;
-				border-radius: 3px;
-				font-size: 13px;
-			}
-		</style>
-		<div class="wrap">
+		<div class="wrap rri-admin-page">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 			<?php
@@ -464,13 +474,13 @@ class Rewrite_Rules_Inspector {
 			$permastructs = $this->get_permastructs();
 			?>
 
-			<h2 id="rewrite-rules-section"><?php esc_html_e( 'Rewrite Rules', 'rewrite-rules-inspector' ); ?></h2>
-			
-			<?php if ( ! empty( $permastructs ) ) : ?>
-				<p>
-					<a href="#permastructs-section"><?php esc_html_e( 'Jump to Permastructs', 'rewrite-rules-inspector' ); ?></a>
-				</p>
-			<?php endif; ?>
+			<div class="rri-section">
+				<h2 id="rewrite-rules-section">
+					<?php esc_html_e( 'Rewrite Rules', 'rewrite-rules-inspector' ); ?>
+					<?php if ( ! empty( $permastructs ) ) : ?>
+						<a href="#permastructs-section" class="jump-link"><?php esc_html_e( 'Jump to Permastructs', 'rewrite-rules-inspector' ); ?></a>
+					<?php endif; ?>
+				</h2>
 
 			<?php
 			$missing_count = 0;
@@ -506,87 +516,19 @@ class Rewrite_Rules_Inspector {
 				</p>
 			<?php endif; ?>
 
-			<?php $wp_list_table->display(); ?>
+				<?php $wp_list_table->display(); ?>
+			</div>
 
 			<?php if ( ! empty( $permastructs ) ) : ?>
-				<h2 id="permastructs-section"><?php esc_html_e( 'Permastructs', 'rewrite-rules-inspector' ); ?></h2>
-				
-				<p>
+				<div class="rri-section">
 					<?php
-					/* translators: %d: Count of permastructs */
-					printf( esc_html__( 'A listing of all %d permastructs that WordPress is aware of.', 'rewrite-rules-inspector' ), count( $permastructs ) );
+					// Load the permastructs table template.
+					$template_path = plugin_dir_path( __DIR__ ) . 'views/permastructs-table.php';
+					if ( file_exists( $template_path ) ) {
+						include $template_path;
+					}
 					?>
-					<a href="#rewrite-rules-section"><?php esc_html_e( 'Jump to Rewrite Rules', 'rewrite-rules-inspector' ); ?></a>
-				</p>
-
-				<?php
-				// Create a simple list table for permastructs.
-				$permastructs_table = new WP_List_Table(
-					array(
-						'singular' => 'Permastruct',
-						'plural'   => 'Permastructs',
-					)
-				);
-
-				// Set up the columns.
-				$permastructs_table->_column_headers = array(
-					array(
-						'name'        => __( 'Name', 'rewrite-rules-inspector' ),
-						'structure'   => __( 'Structure', 'rewrite-rules-inspector' ),
-						'description' => __( 'Description', 'rewrite-rules-inspector' ),
-					),
-					array(),
-					array(),
-				);
-
-				// Set the items.
-				$permastructs_table->items = $permastructs;
-
-				// Display the table.
-				?>
-				<table class="wp-list-table widefat fixed striped">
-					<thead>
-						<tr>
-							<th scope="col" class="manage-column column-name column-primary">
-								<?php esc_html_e( 'Name', 'rewrite-rules-inspector' ); ?>
-							</th>
-							<th scope="col" class="manage-column column-structure">
-								<?php esc_html_e( 'Structure', 'rewrite-rules-inspector' ); ?>
-							</th>
-							<th scope="col" class="manage-column column-description">
-								<?php esc_html_e( 'Description', 'rewrite-rules-inspector' ); ?>
-							</th>
-						</tr>
-					</thead>
-					<tbody id="the-list">
-						<?php foreach ( $permastructs as $permastruct ) : ?>
-							<tr>
-								<td class="name column-name column-primary">
-									<strong><?php echo esc_html( $permastruct['name'] ); ?></strong>
-								</td>
-								<td class="structure column-structure">
-									<code class="permastruct-structure"><?php echo esc_html( $permastruct['structure'] ); ?></code>
-								</td>
-								<td class="description column-description">
-									<?php echo esc_html( $permastruct['description'] ); ?>
-								</td>
-							</tr>
-						<?php endforeach; ?>
-					</tbody>
-					<tfoot>
-						<tr>
-							<th scope="col" class="manage-column column-name column-primary">
-								<?php esc_html_e( 'Name', 'rewrite-rules-inspector' ); ?>
-							</th>
-							<th scope="col" class="manage-column column-structure">
-								<?php esc_html_e( 'Structure', 'rewrite-rules-inspector' ); ?>
-							</th>
-							<th scope="col" class="manage-column column-description">
-								<?php esc_html_e( 'Description', 'rewrite-rules-inspector' ); ?>
-							</th>
-						</tr>
-					</tfoot>
-				</table>
+				</div>
 			<?php endif; ?>
 		</div>
 		<?php

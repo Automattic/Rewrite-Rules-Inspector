@@ -66,8 +66,8 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 			return false;
 		}
 		?>
-		<div class="custom-tablenav-top" style="padding-top:5px;padding-bottom:10px;">
-			<div style="float:right;">
+		<div class="custom-tablenav-top">
+			<div class="tablenav-actions">
 				<?php
 				// Only show the flush button if enabled.
 				if ( $rewrite_rules_inspector->flushing_enabled ) :
@@ -124,8 +124,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 				<?php submit_button( __( 'Filter', 'rewrite-rules-inspector' ), 'primary', null, false ); ?>
 				<?php if ( $search || ! empty( $_GET['source'] ) ) : ?>
 					<a href="<?php echo esc_url( menu_page_url( $plugin_page, false ) ); ?>" class="button-secondary"><?php esc_html_e( 'Reset', 'rewrite-rules-inspector' ); ?></a>
-				<?php endif;
-      		?>
+				<?php endif; ?>
 			</form>
 		</div>
 		<?php
