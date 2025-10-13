@@ -190,6 +190,8 @@ class Rewrite_Rules_Inspector {
 
 		$this->sources = array_unique( $sources );
 
+		$match_path = '';
+		
 		if ( ! empty( $_GET['s'] ) ) {
 			$match_path                = wp_parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
 			$wordpress_subdir_for_site = wp_parse_url( home_url(), PHP_URL_PATH );
