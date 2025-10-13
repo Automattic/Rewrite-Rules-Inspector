@@ -105,6 +105,118 @@ class Rewrite_Rules_Inspector {
 	}
 
 	/**
+	 * Get all permastructs that WordPress is aware of.
+	 *
+	 * @since 1.5.0
+	 * @return array Array of permastructs with their names and structures.
+	 */
+	public function get_permastructs() {
+		global $wp_rewrite;
+
+		$permastructs = array();
+
+		// Core permastructs.
+		$permastructs['post'] = array(
+			'name'        => __( 'Post Permalink', 'rewrite-rules-inspector' ),
+			'structure'   => $wp_rewrite->permalink_structure,
+			'description' => __( 'The permalink structure for posts', 'rewrite-rules-inspector' ),
+		);
+
+		$permastructs['date'] = array(
+			'name'        => __( 'Date Archive', 'rewrite-rules-inspector' ),
+			'structure'   => $wp_rewrite->get_date_permastruct(),
+			'description' => __( 'The permalink structure for date archives', 'rewrite-rules-inspector' ),
+		);
+
+		$permastructs['search'] = array(
+			'name'        => __( 'Search Results', 'rewrite-rules-inspector' ),
+			'structure'   => $wp_rewrite->get_search_permastruct(),
+			'description' => __( 'The permalink structure for search results', 'rewrite-rules-inspector' ),
+		);
+
+		$permastructs['author'] = array(
+			'name'        => __( 'Author Archive', 'rewrite-rules-inspector' ),
+			'structure'   => $wp_rewrite->get_author_permastruct(),
+			'description' => __( 'The permalink structure for author archives', 'rewrite-rules-inspector' ),
+		);
+
+		$permastructs['comments'] = array(
+			'name'        => __( 'Comments', 'rewrite-rules-inspector' ),
+			'structure'   => $wp_rewrite->root . $wp_rewrite->comments_base,
+			'description' => __( 'The permalink structure for comments', 'rewrite-rules-inspector' ),
+		);
+
+		$permastructs['root'] = array(
+			'name'        => __( 'Root', 'rewrite-rules-inspector' ),
+			'structure'   => $wp_rewrite->root . '/',
+			'description' => __( 'The root permalink structure', 'rewrite-rules-inspector' ),
+		);
+
+		// Extra permastructs including tags, categories, etc.
+		foreach ( $wp_rewrite->extra_permastructs as $permastructname => $permastruct ) {
+			$structure = '';
+			if ( is_array( $permastruct ) ) {
+				// Pre 3.4 compat.
+				if ( count( $permastruct ) === 2 ) {
+					$structure = $permastruct[0];
+				} else {
+					$structure = $permastruct['struct'] ?? '';
+				}
+			} else {
+				$structure = $permastruct;
+			}
+
+			// Generate human-readable names and descriptions.
+			$name        = ucwords( str_replace( array( '_', '-' ), ' ', $permastructname ) );
+			/* translators: %s: permastruct name */
+			$description = sprintf( __( 'The permalink structure for %s', 'rewrite-rules-inspector' ), strtolower( $name ) );
+
+			// Special cases for common permastructs.
+			switch ( $permastructname ) {
+				case 'category':
+					$name        = __( 'Category Archive', 'rewrite-rules-inspector' );
+					$description = __( 'The permalink structure for category archives', 'rewrite-rules-inspector' );
+					break;
+				case 'post_tag':
+					$name        = __( 'Tag Archive', 'rewrite-rules-inspector' );
+					$description = __( 'The permalink structure for tag archives', 'rewrite-rules-inspector' );
+					break;
+				case 'post_format':
+					$name        = __( 'Post Format Archive', 'rewrite-rules-inspector' );
+					$description = __( 'The permalink structure for post format archives', 'rewrite-rules-inspector' );
+					break;
+				case 'test_custom':
+					$name        = __( 'Test Custom (Demo)', 'rewrite-rules-inspector' );
+					$description = __( 'A custom permastruct added for testing the permastructs display feature', 'rewrite-rules-inspector' );
+					break;
+				case 'demo_archive':
+					$name        = __( 'Demo Archive (Test)', 'rewrite-rules-inspector' );
+					$description = __( 'A demo archive permastruct with date-based structure for testing', 'rewrite-rules-inspector' );
+					break;
+			}
+
+			$permastructs[ $permastructname ] = array(
+				'name'        => $name,
+				'structure'   => $structure,
+				'description' => $description,
+			);
+		}
+
+		// Filter out empty structures.
+		$permastructs = array_filter(
+			$permastructs,
+			function ( $permastruct ) {
+				return ! empty( $permastruct['structure'] );
+			}
+		);
+
+		// Allow filtering of permastructs.
+		$permastructs = apply_filters( 'rri_permastructs', $permastructs );
+
+		return $permastructs;
+	}
+
+	/**
 	 * Get the rewrite rules for the current view.
 	 *
 	 * @since 1.0.0
@@ -250,15 +362,38 @@ class Rewrite_Rules_Inspector {
 				border-top-color: #fecfd0;
 				border-bottom-color: #f99b9d;
 			}
+			#permastructs-section {
+				margin-top: 30px;
+			}
+			.permastruct-structure {
+				font-family: monospace;
+				background: #f6f7f7;
+				padding: 2px 6px;
+				border-radius: 3px;
+				font-size: 13px;
+			}
 		</style>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 			<?php
+			// Get permastructs for jump link.
+			$permastructs = $this->get_permastructs();
+			?>
+
+			<h2 id="rewrite-rules-section"><?php esc_html_e( 'Rewrite Rules', 'rewrite-rules-inspector' ); ?></h2>
+			
+			<?php if ( ! empty( $permastructs ) ) : ?>
+				<p>
+					<a href="#permastructs-section"><?php esc_html_e( 'Jump to Permastructs', 'rewrite-rules-inspector' ); ?></a>
+				</p>
+			<?php endif; ?>
+
+			<?php
 			$missing_count = 0;
 			foreach ( $rules as $rule ) {
 				if ( 'missing' === $rule['source'] ) {
-					$missing_count++;
+					++$missing_count;
 				}
 			}
 
@@ -286,10 +421,90 @@ class Rewrite_Rules_Inspector {
 					printf( esc_html__( 'A listing of all %1$s rewrite rules for this site.', 'rewrite-rules-inspector' ), count( $wp_list_table->items ) );
 					?>
 				</p>
-			<?php endif;
+			<?php endif; ?>
 
-			$wp_list_table->display();
-			?>
+			<?php $wp_list_table->display(); ?>
+
+			<?php if ( ! empty( $permastructs ) ) : ?>
+				<h2 id="permastructs-section"><?php esc_html_e( 'Permastructs', 'rewrite-rules-inspector' ); ?></h2>
+				
+				<p>
+					<?php
+					/* translators: %d: Count of permastructs */
+					printf( esc_html__( 'A listing of all %d permastructs that WordPress is aware of.', 'rewrite-rules-inspector' ), count( $permastructs ) );
+					?>
+					<a href="#rewrite-rules-section"><?php esc_html_e( 'Jump to Rewrite Rules', 'rewrite-rules-inspector' ); ?></a>
+				</p>
+
+				<?php
+				// Create a simple list table for permastructs.
+				$permastructs_table = new WP_List_Table(
+					array(
+						'singular' => 'Permastruct',
+						'plural'   => 'Permastructs',
+					)
+				);
+
+				// Set up the columns.
+				$permastructs_table->_column_headers = array(
+					array(
+						'name'        => __( 'Name', 'rewrite-rules-inspector' ),
+						'structure'   => __( 'Structure', 'rewrite-rules-inspector' ),
+						'description' => __( 'Description', 'rewrite-rules-inspector' ),
+					),
+					array(),
+					array(),
+				);
+
+				// Set the items.
+				$permastructs_table->items = $permastructs;
+
+				// Display the table.
+				?>
+				<table class="wp-list-table widefat fixed striped">
+					<thead>
+						<tr>
+							<th scope="col" class="manage-column column-name column-primary">
+								<?php esc_html_e( 'Name', 'rewrite-rules-inspector' ); ?>
+							</th>
+							<th scope="col" class="manage-column column-structure">
+								<?php esc_html_e( 'Structure', 'rewrite-rules-inspector' ); ?>
+							</th>
+							<th scope="col" class="manage-column column-description">
+								<?php esc_html_e( 'Description', 'rewrite-rules-inspector' ); ?>
+							</th>
+						</tr>
+					</thead>
+					<tbody id="the-list">
+						<?php foreach ( $permastructs as $permastruct ) : ?>
+							<tr>
+								<td class="name column-name column-primary">
+									<strong><?php echo esc_html( $permastruct['name'] ); ?></strong>
+								</td>
+								<td class="structure column-structure">
+									<code class="permastruct-structure"><?php echo esc_html( $permastruct['structure'] ); ?></code>
+								</td>
+								<td class="description column-description">
+									<?php echo esc_html( $permastruct['description'] ); ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="col" class="manage-column column-name column-primary">
+								<?php esc_html_e( 'Name', 'rewrite-rules-inspector' ); ?>
+							</th>
+							<th scope="col" class="manage-column column-structure">
+								<?php esc_html_e( 'Structure', 'rewrite-rules-inspector' ); ?>
+							</th>
+							<th scope="col" class="manage-column column-description">
+								<?php esc_html_e( 'Description', 'rewrite-rules-inspector' ); ?>
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			<?php endif; ?>
 		</div>
 		<?php
 	}
