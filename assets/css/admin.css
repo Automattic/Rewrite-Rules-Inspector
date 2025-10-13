@@ -1,0 +1,50 @@
+/**
+ * Rewrite Rules Inspector Admin Styles
+ *
+ * @package automattic\rewrite-rules-inspector
+ * @since 1.5.0
+ */
+
+/* Rewrite Rules Table Styles */
+#the-list tr.type-sunrise,
+#the-list tr.type-custom {
+	background-color: #eec7f0;
+}
+
+#the-list tr.type-sunrise td,
+#the-list tr.type-custom td {
+	border-top-color: #f4e6f5;
+	border-bottom-color: #efbbf2;
+}
+
+#the-list tr.source-missing {
+	background-color: #f7a8a9;
+}
+
+#the-list tr.type-missing td {
+	border-top-color: #fecfd0;
+	border-bottom-color: #f99b9d;
+}
+
+/* Permastructs Section Styles */
+#permastructs-section {
+	margin-top: 30px;
+}
+
+.permastruct-structure {
+	font-family: monospace;
+	background: #f6f7f7;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 13px;
+}
+
+/* List Table Navigation Styles */
+.custom-tablenav-top {
+	padding-top: 5px;
+	padding-bottom: 10px;
+}
+
+.custom-tablenav-top .tablenav-actions {
+	float: right;
+}

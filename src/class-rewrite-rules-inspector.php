@@ -56,6 +56,9 @@ class Rewrite_Rules_Inspector {
 	public function run() {
 		// This plugin only runs in the admin, but we need it initialized on init.
 		add_action( 'init', array( $this, 'action_init' ) );
+		
+		// Register and enqueue admin styles.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 	}
 
 	/**
@@ -84,6 +87,30 @@ class Rewrite_Rules_Inspector {
 		} elseif ( isset( $_GET['page'], $_GET['message'] ) && $_GET['page'] === $this->page_slug && 'flush-success' === $_GET['message'] ) {
 			add_action( 'admin_notices', array( $this, 'action_admin_notices' ) );
 		}
+	}
+
+	/**
+	 * Enqueue admin styles for the rewrite rules inspector page.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $hook_suffix The current admin page hook suffix.
+	 */
+	public function enqueue_admin_styles( $hook_suffix ) {
+		// Only enqueue on our admin page.
+		if ( 'tools_page_' . $this->page_slug !== $hook_suffix ) {
+			return;
+		}
+
+		$css_url = plugin_dir_url( __DIR__ ) . 'assets/css/admin.css';
+		$css_version = REWRITE_RULES_INSPECTOR_VERSION;
+
+		wp_enqueue_style(
+			'rewrite-rules-inspector-admin',
+			$css_url,
+			array(),
+			$css_version
+		);
 	}
 
 	/**
@@ -428,34 +455,6 @@ class Rewrite_Rules_Inspector {
 		$wp_list_table->prepare_items();
 
 		?>
-		<style>
-			#the-list tr.type-sunrise,
-			#the-list tr.type-custom {
-				background-color: #eec7f0;
-			}
-			#the-list tr.type-sunrise td,
-			#the-list tr.type-custom td {
-				border-top-color: #f4e6f5;
-				border-bottom-color: #efbbf2;
-			}
-			#the-list tr.source-missing {
-				background-color: #f7a8a9;
-			}
-			#the-list tr.type-missing td {
-				border-top-color: #fecfd0;
-				border-bottom-color: #f99b9d;
-			}
-			#permastructs-section {
-				margin-top: 30px;
-			}
-			.permastruct-structure {
-				font-family: monospace;
-				background: #f6f7f7;
-				padding: 2px 6px;
-				border-radius: 3px;
-				font-size: 13px;
-			}
-		</style>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
