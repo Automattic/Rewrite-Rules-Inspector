@@ -53,8 +53,11 @@ final class ContextualHelp {
 				'content' => '<p>' . __( '<strong>Permastructs</strong> are the URL structure templates that define how different types of content should be accessed via URLs.', 'rewrite-rules-inspector' ) . '</p>' .
 					'<p>' . __( 'For example:', 'rewrite-rules-inspector' ) . '</p>' .
 					'<ul>' .
+					/* translators: %year%, %monthnum%, %day%, %postname% are permalink structure tags. Keep them as-is in the URL example. */
 					'<li>' . __( '<strong>Post Permalink:</strong> <code>/%year%/%monthnum%/%day%/%postname%/</code> - defines how individual posts are accessed', 'rewrite-rules-inspector' ) . '</li>' .
+					/* translators: %category% is a permalink structure tag. Keep it as-is in the URL example. */
 					'<li>' . __( '<strong>Category Archive:</strong> <code>/category/%category%</code> - defines how category pages are accessed', 'rewrite-rules-inspector' ) . '</li>' .
+					/* translators: %post_tag% is a permalink structure tag. Keep it as-is in the URL example. */
 					'<li>' . __( '<strong>Tag Archive:</strong> <code>/tag/%post_tag%</code> - defines how tag pages are accessed', 'rewrite-rules-inspector' ) . '</li>' .
 					'</ul>' .
 					'<p>' . __( 'WordPress uses these permastructs to generate the actual rewrite rules. The permastructs are like blueprints, while the rewrite rules are the specific patterns that get created from those blueprints.', 'rewrite-rules-inspector' ) . '</p>' .

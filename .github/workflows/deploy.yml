@@ -4,13 +4,20 @@ on:
     types: [released]
   # Allow manual triggering of the workflow.
   workflow_dispatch:
+
+permissions: {}
+
 jobs:
   release:
     name: New release to WordPress.org
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
 
       - name: Install SVN (Subversion)
         run: |
@@ -18,7 +25,7 @@ jobs:
           sudo apt-get install subversion
 
       - name: Push to WordPress.org
-        uses: 10up/action-wordpress-plugin-deploy@stable
+        uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
         env:
           SLUG: rewrite-rules-inspector
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
