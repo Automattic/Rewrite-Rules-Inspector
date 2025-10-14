@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <h2 id="permastructs-section">
 	<?php esc_html_e( 'Permastructs', 'rewrite-rules-inspector' ); ?>
-	<a href="#rewrite-rules-section" class="jump-link"><?php esc_html_e( 'Jump to Rewrite Rules', 'rewrite-rules-inspector' ); ?></a>
 </h2>
 
 <p>

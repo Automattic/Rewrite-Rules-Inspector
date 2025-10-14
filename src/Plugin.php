@@ -172,8 +172,6 @@ final class Plugin {
 			add_action( 'admin_init', [ $this, 'download_rules' ] );
 		} elseif ( isset( $_GET['page'], $_GET['action'] ) && $_GET['page'] === $this->page_slug && 'flush-rules' === $_GET['action'] ) {
 			add_action( 'admin_init', [ $this, 'flush_rules' ] );
-		} elseif ( isset( $_GET['page'], $_GET['message'] ) && $_GET['page'] === $this->page_slug && 'flush-success' === $_GET['message'] ) {
-			add_action( 'admin_notices', [ $this, 'action_admin_notices' ] );
 		}
 	}
 
@@ -212,15 +210,6 @@ final class Plugin {
 	}
 
 	/**
-	 * Show a message when you've successfully flushed your rewrite rules.
-	 *
-	 * @since 1.1.0
-	 */
-	public function action_admin_notices(): void {
-		$this->view_renderer->render_flush_success_message();
-	}
-
-	/**
 	 * View the rewrite rules for the site.
 	 *
 	 * @since 1.0.0
@@ -240,8 +229,9 @@ final class Plugin {
 			// Use the same filtered rules for URL testing to ensure consistency.
 			$url_test_results = $this->url_tester_service->test_url_with_rules( $url, $rules );
 		}
+		$flush_success = ( isset( $_GET['message'] ) && 'flush-success' === $_GET['message'] );
 
-		$this->view_renderer->render_rules_view( $rules, $permastructs, $wp_list_table, $url_test_results );
+		$this->view_renderer->render_rules_view( $rules, $permastructs, $wp_list_table, $url_test_results, $flush_success );
 	}
 
 	/**
