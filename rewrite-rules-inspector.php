@@ -25,20 +25,31 @@
 define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.4.0' ); // Unused for now.
 define( 'REWRITE_RULES_INSPECTOR_FILE_PATH', plugin_basename( __FILE__ ) );
 
-require __DIR__ . '/src/class-rewrite-rules-inspector.php';
-
 // Load the WP_List_Table class if it doesn't yet exist.
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . '/wp-admin/includes/class-wp-list-table.php';
 }
 
-require __DIR__ . '/src/class-rewrite-rules-inspector-list-table.php';
+// Load core classes.
+require __DIR__ . '/src/Core/RewriteRules.php';
+require __DIR__ . '/src/Core/Permastructs.php';
+require __DIR__ . '/src/Core/FileExport.php';
+require __DIR__ . '/src/Core/RuleFlush.php';
+
+// Load admin classes.
+require __DIR__ . '/src/Admin/AdminPage.php';
+require __DIR__ . '/src/Admin/ViewRenderer.php';
+require __DIR__ . '/src/Admin/ContextualHelp.php';
+require __DIR__ . '/src/Admin/RewriteRulesTable.php';
+
+// Load main plugin class.
+require __DIR__ . '/src/Plugin.php';
 
 add_action(
 	'plugins_loaded',
 	function(): void {
 		global $rewrite_rules_inspector;
-		$rewrite_rules_inspector = new Rewrite_Rules_Inspector();
+		$rewrite_rules_inspector = new \Automattic\RewriteRulesInspector\Plugin();
 		$rewrite_rules_inspector->run();
 	}
 );

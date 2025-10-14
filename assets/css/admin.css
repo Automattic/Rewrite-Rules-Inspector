@@ -180,6 +180,10 @@
 	box-sizing: border-box;
 }
 
+.custom-tablenav-top select {
+	min-width: 120px;
+}
+
 .custom-tablenav-top input[type="text"]:focus,
 .custom-tablenav-top select:focus {
 	border-color: var(--rri-primary-color);
