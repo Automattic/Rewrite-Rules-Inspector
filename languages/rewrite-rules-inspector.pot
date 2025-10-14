@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rewrite Rules Inspector 1.5.0\n"
+"Project-Id-Version: Rewrite Rules Inspector 1.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rewrite-rules-inspector\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-14T07:44:24+00:00\n"
+"POT-Creation-Date: 2025-10-14T16:00:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rewrite-rules-inspector\n"
@@ -42,7 +42,8 @@ msgstr ""
 
 #: src/Admin/AdminPage.php:88
 #: src/Admin/ContextualHelp.php:36
-#: src/Admin/ViewRenderer.php:51
+#: src/Admin/ViewRenderer.php:65
+#: src/Admin/ViewRenderer.php:83
 msgid "Rewrite Rules"
 msgstr ""
 
@@ -79,6 +80,8 @@ msgid "When someone visits a URL, WordPress checks these rules in order until it
 msgstr ""
 
 #: src/Admin/ContextualHelp.php:52
+#: src/Admin/ViewRenderer.php:75
+#: src/Admin/ViewRenderer.php:95
 #: views/permastructs-table.php:18
 msgid "Permastructs"
 msgstr ""
@@ -176,132 +179,150 @@ msgstr ""
 msgid "No rewrite rules were found."
 msgstr ""
 
+#. translators: %d: Number of rules
+#: src/Admin/RewriteRulesTable.php:185
+#, php-format
+msgid "%d rule for this selection"
+msgid_plural "%d rules for this selection"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: Number of rules
 #: src/Admin/RewriteRulesTable.php:191
+#, php-format
+msgid "%d rule total"
+msgid_plural "%d rules total"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/RewriteRulesTable.php:218
 msgid "Flush Rules"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:210
+#: src/Admin/RewriteRulesTable.php:237
 msgid "Download"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:214
+#: src/Admin/RewriteRulesTable.php:241
 msgid "Test URL:"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:215
-msgid "Enter URL to test (e.g., /my-page/ or https://example.com/my-page/)"
+#: src/Admin/RewriteRulesTable.php:242
+msgid "Enter URL (e.g., /my-page/ or https://example.com/my-page/)"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:217
+#: src/Admin/RewriteRulesTable.php:244
 msgid "Rule Source:"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:232
+#: src/Admin/RewriteRulesTable.php:259
 msgid "Test URL"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:234
+#: src/Admin/RewriteRulesTable.php:261
 msgid "Reset"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:251
+#: src/Admin/RewriteRulesTable.php:278
+msgid "Priority"
+msgstr ""
+
+#: src/Admin/RewriteRulesTable.php:279
 msgid "Rule"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:252
+#: src/Admin/RewriteRulesTable.php:280
 msgid "Rewrite"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:253
-#: src/Admin/ViewRenderer.php:193
+#: src/Admin/RewriteRulesTable.php:281
+#: src/Admin/ViewRenderer.php:214
 msgid "Source"
 msgstr ""
 
-#: src/Admin/RewriteRulesTable.php:287
+#: src/Admin/RewriteRulesTable.php:320
 msgid "missing"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:53
-msgid "Jump to Permastructs"
+#: src/Admin/ViewRenderer.php:57
+msgid "Rewrite Rules Inspector sections"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:92
+#: src/Admin/ViewRenderer.php:122
 msgid "No rewrite rules yet, try flushing."
 msgstr ""
 
 #. translators: %d: Count of missing rewrite rules
-#: src/Admin/ViewRenderer.php:96
+#: src/Admin/ViewRenderer.php:127
 #, php-format
 msgid "%d rewrite rule may be missing, try flushing."
 msgid_plural "%d rewrite rules may be missing, try flushing."
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: %s: Count of rewrite rules
-#: src/Admin/ViewRenderer.php:113
-#, php-format
-msgid "A listing of all %1$s rewrite rules for this site that match \"<a target=\"_blank\" href=\"%2$s\">%2$s</a>\""
-msgstr ""
-
-#. translators: %s: Count of rewrite rules
-#: src/Admin/ViewRenderer.php:122
-#, php-format
-msgid "A listing of all %1$s rewrite rules for this site."
-msgstr ""
-
-#: src/Admin/ViewRenderer.php:151
+#: src/Admin/ViewRenderer.php:155
 msgid "URL Test Results"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:154
+#: src/Admin/ViewRenderer.php:158
 msgid "URL Tested:"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:155
+#: src/Admin/ViewRenderer.php:159
 msgid "Path Tested:"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:159
+#: src/Admin/ViewRenderer.php:167
+msgid "No rewrite rules match the selected rule source."
+msgstr ""
+
+#: src/Admin/ViewRenderer.php:177
 msgid "Result: 404 Error"
 msgstr ""
 
 #. translators: %d: Number of rules tested
-#: src/Admin/ViewRenderer.php:163
+#: src/Admin/ViewRenderer.php:181
 #, php-format
 msgid "This URL does not match any of the %d rewrite rules and would result in a 404 error."
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:170
-msgid "Result: Found Matching Rule(s)"
+#: src/Admin/ViewRenderer.php:188
+msgid "Result: No matching rules"
 msgstr ""
 
-#. translators: %d: Number of matches
-#: src/Admin/ViewRenderer.php:174
+#. translators: %d: Number of rules tested
+#: src/Admin/ViewRenderer.php:192
 #, php-format
-msgid "Found %d matching rule(s)."
+msgid "This URL does not match any of the %d rewrite rules, but it may be handled by WordPress core routing."
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:182
+#: src/Admin/ViewRenderer.php:203
 msgid "First Match (WordPress will use this):"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:185
+#: src/Admin/ViewRenderer.php:206
 msgid "Rule Pattern"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:189
+#: src/Admin/ViewRenderer.php:210
 msgid "Rewrite Target"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:198
+#: src/Admin/ViewRenderer.php:219
 msgid "Query Variables"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:212
-msgid "All Matching Rules:"
+#: src/Admin/ViewRenderer.php:254
+msgid "Additional Matching Rules:"
 msgstr ""
 
-#: src/Admin/ViewRenderer.php:235
+#. translators: %d: Number of additional matches
+#: src/Admin/ViewRenderer.php:258
+#, php-format
+msgid "See the table below for all %d matching rules in priority order."
+msgstr ""
+
+#: src/Admin/ViewRenderer.php:276
 msgid "Rewrite rules flushed."
 msgstr ""
 
@@ -422,35 +443,31 @@ msgstr ""
 msgid "The URL \"%1$s\" matches %2$d rewrite rules. The first match (which WordPress will use) is: %3$s"
 msgstr ""
 
-#: views/permastructs-table.php:19
-msgid "Jump to Rewrite Rules"
-msgstr ""
-
 #. translators: %d: Count of permastructs
-#: views/permastructs-table.php:25
+#: views/permastructs-table.php:24
 #, php-format
 msgid "A listing of all %d permastructs that WordPress is aware of."
 msgstr ""
 
-#: views/permastructs-table.php:30
+#: views/permastructs-table.php:29
 msgid "WordPress Permastructs"
 msgstr ""
 
-#: views/permastructs-table.php:34
-#: views/permastructs-table.php:62
+#: views/permastructs-table.php:33
+#: views/permastructs-table.php:61
 msgid "Name"
 msgstr ""
 
-#: views/permastructs-table.php:37
-#: views/permastructs-table.php:65
+#: views/permastructs-table.php:36
+#: views/permastructs-table.php:64
 msgid "Structure"
 msgstr ""
 
-#: views/permastructs-table.php:40
-#: views/permastructs-table.php:68
+#: views/permastructs-table.php:39
+#: views/permastructs-table.php:67
 msgid "Description"
 msgstr ""
 
-#: views/permastructs-table.php:51
+#: views/permastructs-table.php:50
 msgid "Permastruct structure"
 msgstr ""

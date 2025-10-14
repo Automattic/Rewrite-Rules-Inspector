@@ -34,33 +34,11 @@
 }
 
 /* ==========================================================================
-   Navigation and Jump Links
+   Tabs
    ========================================================================== */
-
-.jump-link {
-	display: inline-block;
-	margin-left: var(--rri-spacing-sm);
-	padding: 1px 4px;
-	background: transparent;
-	border: none;
-	border-radius: 2px;
-	text-decoration: none;
-	color: #666;
-	font-size: 12px;
-	font-weight: normal;
-	transition: color 0.15s ease;
-}
-
-.jump-link:hover,
-.jump-link:focus {
-	color: var(--rri-primary-color);
-	text-decoration: none;
-	background: transparent;
-}
-
-.jump-link:focus {
-	outline: 1px solid var(--rri-primary-color);
-	outline-offset: 1px;
+/* WordPress provides base styles for .nav-tab-wrapper and .nav-tab */
+.nav-tab-wrapper {
+	margin-bottom: 12px;
 }
 
 /* ==========================================================================
@@ -144,7 +122,20 @@
 .custom-tablenav-top .tablenav-actions {
 	float: right;
 	display: flex;
+	align-items: center;
 	gap: var(--rri-spacing-sm);
+}
+
+.rri-rules-count {
+	color: #666;
+	font-size: 13px;
+	margin-right: var(--rri-spacing-sm);
+}
+
+/* Priority column should be narrow */
+.column-priority {
+	width: 60px;
+	text-align: center;
 }
 
 .custom-tablenav-top form {
@@ -247,11 +238,6 @@
 		padding: 2px 4px;
 	}
 	
-	.jump-link {
-		display: inline-block;
-		margin-left: var(--rri-spacing-sm);
-		margin-top: 0;
-	}
 }
 
 @media (max-width: 600px) {
@@ -350,6 +336,29 @@
 	background: #f9f9f9;
 	border: 1px solid #ddd;
 	border-radius: 4px;
+}
+
+/* Notices kept inside the tab content to avoid core relocation */
+.rri-notice {
+    /* Match core .notice spacing */
+    margin: 5px 0 15px;
+    padding: 12px;
+    background: #fff;
+    border-left: 4px solid #72aee6; /* info color default */
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    color: #1d2327;
+}
+
+.rri-notice p {
+    margin: .5em 0;
+}
+
+.rri-notice-success {
+    border-left-color: #46b450; /* core success */
+}
+
+.rri-notice-error {
+    border-left-color: #dc3232; /* core error */
 }
 
 .rri-url-test-results h3 {

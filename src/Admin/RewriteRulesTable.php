@@ -130,25 +130,30 @@ final class RewriteRulesTable extends \WP_List_Table {
 	 */
 	public function display() {
 		$this->display_tablenav( 'top' );
-		?>
-		<table class="wp-list-table <?php echo esc_attr( implode( ' ', $this->get_table_classes() ) ); ?>">
-			<thead>
-				<tr>
-					<?php $this->print_column_headers(); ?>
-				</tr>
-			</thead>
+		
+		// Only show the table if there are items to display
+		if ( $this->has_items() ) {
+			?>
+			<table class="wp-list-table <?php echo esc_attr( implode( ' ', $this->get_table_classes() ) ); ?>">
+				<thead>
+					<tr>
+						<?php $this->print_column_headers(); ?>
+					</tr>
+				</thead>
 
-			<tbody id="the-list"<?php echo $this->has_items() ? " data-wp-lists='list:{$this->_args['singular']}'" : ''; ?>>
-				<?php $this->display_rows_or_placeholder(); ?>
-			</tbody>
+				<tbody id="the-list"<?php echo " data-wp-lists='list:{$this->_args['singular']}'"; ?>>
+					<?php $this->display_rows_or_placeholder(); ?>
+				</tbody>
 
-			<tfoot>
-				<tr>
-					<?php $this->print_column_headers( false ); ?>
-				</tr>
-			</tfoot>
-		</table>
-		<?php
+				<tfoot>
+					<tr>
+						<?php $this->print_column_headers( false ); ?>
+					</tr>
+				</tfoot>
+			</table>
+			<?php
+		}
+		
 		$this->display_tablenav( 'bottom' );
 	}
 
@@ -168,6 +173,28 @@ final class RewriteRulesTable extends \WP_List_Table {
 		?>
 		<div class="custom-tablenav-top">
 			<div class="tablenav-actions">
+				<?php
+				// Show rules count for current selection
+				$count = count( $this->items );
+				$has_url_filter = ! empty( $_GET['s'] );
+				$has_source_filter = isset( $_GET['source'] ) && 'all' !== $_GET['source'];
+				
+				if ( $has_url_filter || $has_source_filter ) {
+					$count_text = sprintf(
+						/* translators: %d: Number of rules */
+						_n( '%d rule for this selection', '%d rules for this selection', $count, 'rewrite-rules-inspector' ),
+						$count
+					);
+				} else {
+					$count_text = sprintf(
+						/* translators: %d: Number of rules */
+						_n( '%d rule total', '%d rules total', $count, 'rewrite-rules-inspector' ),
+						$count
+					);
+				}
+				?>
+				<span class="rri-rules-count"><?php echo esc_html( $count_text ); ?></span>
+				
 				<?php
 				// Only show the flush button if enabled.
 				if ( $this->flushing_enabled ) :
@@ -212,7 +239,7 @@ final class RewriteRulesTable extends \WP_List_Table {
 			<form method="GET" id="rri-filter-form">
 				<div class="rri-filter-row">
 					<label for="s"><?php esc_html_e( 'Test URL:', 'rewrite-rules-inspector' ); ?></label>
-					<input type="text" id="s" name="s" value="<?php echo esc_attr( $search ); ?>" size="50" placeholder="<?php esc_attr_e( 'Enter URL to test (e.g., /my-page/ or https://example.com/my-page/)', 'rewrite-rules-inspector' ); ?>"/>
+					<input type="text" id="s" name="s" value="<?php echo esc_attr( $search ); ?>" size="50" placeholder="<?php esc_attr_e( 'Enter URL (e.g., /my-page/ or https://example.com/my-page/)', 'rewrite-rules-inspector' ); ?>"/>
 					<input type="hidden" id="page" name="page" value="<?php echo esc_attr( $plugin_page ); ?>" />
 					<label for="source"><?php esc_html_e( 'Rule Source:', 'rewrite-rules-inspector' ); ?></label>
 					<select id="source" name="source">
@@ -248,9 +275,10 @@ final class RewriteRulesTable extends \WP_List_Table {
 	 */
 	public function get_columns(): array {
 		return [
-			'rule'    => __( 'Rule', 'rewrite-rules-inspector' ),
-			'rewrite' => __( 'Rewrite', 'rewrite-rules-inspector' ),
-			'source'  => __( 'Source', 'rewrite-rules-inspector' ),
+			'priority' => __( 'Priority', 'rewrite-rules-inspector' ),
+			'rule'     => __( 'Rule', 'rewrite-rules-inspector' ),
+			'rewrite'  => __( 'Rewrite', 'rewrite-rules-inspector' ),
+			'source'   => __( 'Source', 'rewrite-rules-inspector' ),
 		];
 	}
 
@@ -260,8 +288,10 @@ final class RewriteRulesTable extends \WP_List_Table {
 	 * @since 1.0.0
 	 */
 	public function display_rows() {
+		$priority = 1;
 		foreach ( $this->items as $rule => $data ) {
-			$this->single_row( [ $rule, $data ] );
+			$this->single_row( [ $rule, $data, $priority ] );
+			$priority++;
 		}
 	}
 
@@ -272,9 +302,12 @@ final class RewriteRulesTable extends \WP_List_Table {
 	 * @param array $item The current row's data.
 	 */
 	public function single_row( $item ) {
-		[ $rule, $data ] = $item;
+		[ $rule, $data, $priority ] = $item;
 		?>
 		<tr>
+			<td class="column-priority">
+				<?php echo esc_html( $priority ); ?>
+			</td>
 			<td class="column-rule">
 				<code><?php echo esc_html( $rule ); ?></code>
 			</td>
