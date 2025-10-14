@@ -38,7 +38,7 @@ final class ViewRenderer {
 	 * @param object $wp_list_table WordPress list table object.
 	 * @param array  $url_test_results Optional URL test results.
 	 */
-	public function render_rules_view( array $rules, array $permastructs, $wp_list_table, array $url_test_results = null ): void {
+	public function render_rules_view( array $rules, array $permastructs, $wp_list_table, ?array $url_test_results = null ): void {
 		// Bump view stats or do something else on page load.
 		do_action( 'rri_view_rewrite_rules', $rules );
 
