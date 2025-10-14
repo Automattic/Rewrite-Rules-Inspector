@@ -209,29 +209,31 @@ final class RewriteRulesTable extends \WP_List_Table {
 				?>
 				<a href="<?php echo esc_url( $download_url ); ?>" class="button-secondary"><?php esc_html_e( 'Download', 'rewrite-rules-inspector' ); ?></a>
 			</div>
-			<form method="GET">
-				<label for="s"><?php esc_html_e( 'Match URL:', 'rewrite-rules-inspector' ); ?></label>
-				<input type="text" id="s" name="s" value="<?php echo esc_attr( $search ); ?>" size="50"/>
-				<input type="hidden" id="page" name="page" value="<?php echo esc_attr( $plugin_page ); ?>" />
-				<label for="source"><?php esc_html_e( 'Rule Source:', 'rewrite-rules-inspector' ); ?></label>
-				<select id="source" name="source">
-					<?php
-					$filter_source = 'all';
-					if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $this->sources, true ) ) {
-						$filter_source = sanitize_key( $_GET['source'] );
-					}
+			<form method="GET" id="rri-filter-form">
+				<div class="rri-filter-row">
+					<label for="s"><?php esc_html_e( 'Test URL:', 'rewrite-rules-inspector' ); ?></label>
+					<input type="text" id="s" name="s" value="<?php echo esc_attr( $search ); ?>" size="50" placeholder="<?php esc_attr_e( 'Enter URL to test (e.g., /my-page/ or https://example.com/my-page/)', 'rewrite-rules-inspector' ); ?>"/>
+					<input type="hidden" id="page" name="page" value="<?php echo esc_attr( $plugin_page ); ?>" />
+					<label for="source"><?php esc_html_e( 'Rule Source:', 'rewrite-rules-inspector' ); ?></label>
+					<select id="source" name="source">
+						<?php
+						$filter_source = 'all';
+						if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $this->sources, true ) ) {
+							$filter_source = sanitize_key( $_GET['source'] );
+						}
 
-					foreach ( $this->sources as $value ) {
-						echo '<option value="' . esc_attr( $value ) . '" ';
-						selected( $filter_source, $value );
-						echo '>' . esc_html( $value ) . '</option>';
-					}
-					?>
-				</select>
-				<?php submit_button( __( 'Filter', 'rewrite-rules-inspector' ), 'primary', null, false ); ?>
-				<?php if ( $search || ! empty( $_GET['source'] ) ) : ?>
-					<a href="<?php echo esc_url( menu_page_url( $plugin_page, false ) ); ?>" class="button-secondary"><?php esc_html_e( 'Reset', 'rewrite-rules-inspector' ); ?></a>
-				<?php endif; ?>
+						foreach ( $this->sources as $value ) {
+							echo '<option value="' . esc_attr( $value ) . '" ';
+							selected( $filter_source, $value );
+							echo '>' . esc_html( $value ) . '</option>';
+						}
+						?>
+					</select>
+					<?php submit_button( __( 'Test URL', 'rewrite-rules-inspector' ), 'primary', null, false ); ?>
+					<?php if ( $search || ! empty( $_GET['source'] ) ) : ?>
+						<a href="<?php echo esc_url( menu_page_url( $plugin_page, false ) ); ?>" class="button-secondary"><?php esc_html_e( 'Reset', 'rewrite-rules-inspector' ); ?></a>
+					<?php endif; ?>
+				</div>
 			</form>
 		</div>
 		<?php

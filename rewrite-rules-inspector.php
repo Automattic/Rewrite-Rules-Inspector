@@ -35,6 +35,7 @@ require __DIR__ . '/src/Core/RewriteRules.php';
 require __DIR__ . '/src/Core/Permastructs.php';
 require __DIR__ . '/src/Core/FileExport.php';
 require __DIR__ . '/src/Core/RuleFlush.php';
+require __DIR__ . '/src/Core/UrlTester.php';
 
 // Load admin classes.
 require __DIR__ . '/src/Admin/AdminPage.php';
