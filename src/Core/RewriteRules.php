@@ -164,7 +164,20 @@ final class RewriteRules {
 		$match_path = '';
 		
 		if ( ! empty( $_GET['s'] ) ) {
-			$match_path                = wp_parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
+			$input = sanitize_text_field( $_GET['s'] );
+			
+			// If the input doesn't start with http:// or https://, treat it as a path.
+			if ( ! preg_match( '/^https?:\/\//', $input ) ) {
+				$match_path = $input;
+			} else {
+				$match_path = wp_parse_url( esc_url( $input ), PHP_URL_PATH );
+			}
+			
+			// Ensure we have a string value.
+			if ( null === $match_path ) {
+				$match_path = '';
+			}
+			
 			$wordpress_subdir_for_site = wp_parse_url( home_url(), PHP_URL_PATH );
 			if ( ! empty( $wordpress_subdir_for_site ) ) {
 				$match_path = str_replace( $wordpress_subdir_for_site, '', $match_path );

@@ -8,6 +8,7 @@ use Automattic\RewriteRulesInspector\Core\RewriteRules;
 use Automattic\RewriteRulesInspector\Core\Permastructs;
 use Automattic\RewriteRulesInspector\Core\FileExport;
 use Automattic\RewriteRulesInspector\Core\RuleFlush;
+use Automattic\RewriteRulesInspector\Core\UrlTester;
 use Automattic\RewriteRulesInspector\Admin\AdminPage;
 use Automattic\RewriteRulesInspector\Admin\ViewRenderer;
 use Automattic\RewriteRulesInspector\Admin\ContextualHelp;
@@ -78,6 +79,13 @@ final class Plugin {
 	private RuleFlush $rule_flush_service;
 
 	/**
+	 * URL tester service.
+	 *
+	 * @var UrlTester $url_tester_service
+	 */
+	private UrlTester $url_tester_service;
+
+	/**
 	 * Admin page handler.
 	 *
 	 * @var AdminPage $admin_page
@@ -117,6 +125,7 @@ final class Plugin {
 		$this->permastruct_service   = new Permastructs();
 		$this->file_export_service   = new FileExport( $this->view_cap );
 		$this->rule_flush_service    = new RuleFlush( $this->flushing_enabled, $this->view_cap );
+		$this->url_tester_service    = new UrlTester();
 		$this->view_renderer         = new ViewRenderer( plugin_dir_path( __DIR__ ) );
 		$this->help_service          = new ContextualHelp();
 		$this->admin_page            = new AdminPage( $this->parent_slug, $this->page_slug, $this->view_cap, [ $this, 'view_rules' ], $this->help_service );
@@ -133,6 +142,7 @@ final class Plugin {
 		
 		// Register and enqueue admin styles.
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
+
 	}
 
 	/**
@@ -223,7 +233,15 @@ final class Plugin {
 		$wp_list_table = new RewriteRulesTable( $rules, $sources, $this->flushing_enabled );
 		$wp_list_table->prepare_items();
 
-		$this->view_renderer->render_rules_view( $rules, $permastructs, $wp_list_table );
+		// Test URL if one is provided.
+		$url_test_results = null;
+		if ( ! empty( $_GET['s'] ) ) {
+			$url = sanitize_text_field( $_GET['s'] );
+			// Use the same filtered rules for URL testing to ensure consistency.
+			$url_test_results = $this->url_tester_service->test_url_with_rules( $url, $rules );
+		}
+
+		$this->view_renderer->render_rules_view( $rules, $permastructs, $wp_list_table, $url_test_results );
 	}
 
 	/**
@@ -245,5 +263,16 @@ final class Plugin {
 		global $plugin_page;
 		$redirect_url = menu_page_url( $plugin_page, false );
 		$this->rule_flush_service->flush_rules( $redirect_url );
+	}
+
+
+	/**
+	 * Get the URL tester service.
+	 *
+	 * @since 1.5.0
+	 * @return UrlTester The URL tester service.
+	 */
+	public function get_url_tester(): UrlTester {
+		return $this->url_tester_service;
 	}
 }
