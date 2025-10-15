@@ -38,6 +38,44 @@ Browse a table of all **permastructs** that WordPress is aware of, including:
 - **Structure** — the permalink structure pattern used to generate rules.
 - **Description** — a human-friendly summary of what the permastruct controls.
 
+### Flush Rules
+
+The "Flush Rules" button allows you to regenerate your site's rewrite rules. Here's exactly what happens when you click it:
+
+#### What the Flush Rules Button Does
+
+When you click the "Flush Rules" button, the following sequence occurs:
+
+1. **Security Check**: The system verifies you have the proper permissions (`manage_options` capability) and validates the security nonce to prevent unauthorized access.
+
+2. **Cache Clearing**: WordPress deletes the cached rewrite rules from the options cache using `wp_cache_delete('rewrite_rules', 'options')`.
+
+3. **Rule Regeneration**: WordPress calls `flush_rewrite_rules(false)` to regenerate all rewrite rules based on:
+   - Current permalink structure settings
+   - Custom post types and taxonomies
+   - Any custom rewrite rules added by themes or plugins
+
+4. **Hook Execution**: The `rri_flush_rules` action hook is fired, allowing other plugins to perform additional cleanup or actions after the flush.
+
+5. **Success Feedback**: You're redirected back to the Rewrite Rules Inspector page with a success message confirming the rules have been flushed.
+
+#### When to Use Flush Rules
+
+Use the "Flush Rules" button when:
+
+- **Missing Rules**: You see rules marked as "missing" (red background) in the inspector
+- **Custom URLs Not Working**: Your custom permalinks or post type URLs aren't working properly
+- **After Plugin Changes**: You've activated/deactivated plugins that register custom rewrite rules
+- **Permalink Structure Changes**: You've modified your site's permalink structure
+- **Custom Post Type Issues**: New custom post types or taxonomies aren't generating proper URLs
+
+#### Important Notes
+
+- **Soft Flush**: This performs a "soft" flush (using `flush_rewrite_rules(false)`), which is safer than a hard flush as it doesn't force regeneration of all rules unnecessarily.
+- **Permissions Required**: Only users with `manage_options` capability can flush rules.
+- **No Data Loss**: Flushing rules doesn't delete any content or settings, it only regenerates the URL routing rules.
+- **Immediate Effect**: Changes take effect immediately after flushing.
+
 ## Installation
 
 ### Install the plugin from within WordPress
