@@ -1,7 +1,7 @@
 # Rewrite Rules Inspector
 
 Stable tag: 1.5.1  
-Requires at least: 5.9  
+Requires at least: 6.4  
 Tested up to: 6.8  
 Requires PHP: 7.4  
 License: GPLv2 or later  
