@@ -1,19 +1,39 @@
 {
 	"name": "automattic/rewrite-rules-inspector",
-	"type": "wordpress-plugin",
 	"description": "WordPress plugin to inspect your rewrite rules.",
-	"homepage": "https://wordpress.org/plugins/rewrite-rules-inspector/",
 	"license": "GPL-2.0-or-later",
+	"type": "wordpress-plugin",
+	"authors": [
+		{
+			"name": "Automattic",
+			"homepage": "https://automattic.com/"
+		}
+	],
+	"homepage": "https://wordpress.org/plugins/rewrite-rules-inspector/",
+	"support": {
+		"issues": "https://github.com/Automattic/Rewrite-Rules-Inspector/issues",
+		"source": "https://github.com/Automattic/Rewrite-Rules-Inspector"
+	},
 	"require": {
 		"php": ">=7.4",
-		"composer/installers": "^1 || ^2"
+		"composer/installers": "^1.0 || ^2.0"
 	},
 	"require-dev": {
-		"rector/rector": "^1.2"
+		"rector/rector": "^1.2",
+		"automattic/vipwpcs": "^3.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.1"
 	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true
-		}
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"i18n": "@php wp i18n make-pot . ./languages/rewrite-rules-inspector.pot"
+	},
+	"scripts-descriptions": {
+		"i18n": "Generate a POT file for translation."
 	}
 }
