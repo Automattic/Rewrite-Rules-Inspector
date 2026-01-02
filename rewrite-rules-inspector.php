@@ -11,7 +11,7 @@
  * Plugin Name:       Rewrite Rules Inspector
  * Plugin URI:        https://wordpress.org/plugins/rewrite-rules-inspector/
  * Description:       Simple WordPress admin tool for inspecting your rewrite rules.
- * Version:           1.5.1
+ * Version:           1.6.0
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Author:            Automattic, Daniel Bachhuber
@@ -22,7 +22,7 @@
  * GitHub Plugin URI: https://github.com/Automattic/Rewrite-Rules-Inspector
  */
 
-define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.5.1' ); // Unused for now.
+define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.6.0' ); // Unused for now.
 define( 'REWRITE_RULES_INSPECTOR_FILE_PATH', plugin_basename( __FILE__ ) );
 
 // Load the WP_List_Table class if it doesn't yet exist.
