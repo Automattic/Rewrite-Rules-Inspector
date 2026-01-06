@@ -1,6 +1,7 @@
 # Directories
 /.git/
 /.github/
+/.wordpress-org/
 /bin/
 /node_modules/
 /tests/
@@ -20,3 +21,4 @@ composer.lock
 package.json
 package-lock.json
 phpunit.xml.dist
+rector.php
