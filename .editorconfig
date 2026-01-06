@@ -1,8 +1,9 @@
 # This file is for unifying the coding style for different editors and IDEs
-# editorconfig.org
+# It is based on https://core.trac.wordpress.org/browser/trunk/.editorconfig
+# See https://editorconfig.org for more information about the standard.
 
 # WordPress Coding Standards
-# http://make.wordpress.org/core/handbook/coding-standards/
+# https://make.wordpress.org/core/handbook/coding-standards/
 
 root = true
 

@@ -1,19 +1,65 @@
 {
 	"name": "automattic/rewrite-rules-inspector",
-	"type": "wordpress-plugin",
 	"description": "WordPress plugin to inspect your rewrite rules.",
-	"homepage": "https://wordpress.org/plugins/rewrite-rules-inspector/",
 	"license": "GPL-2.0-or-later",
+	"type": "wordpress-plugin",
+	"authors": [
+		{
+			"name": "Automattic",
+			"homepage": "https://automattic.com/"
+		}
+	],
+	"homepage": "https://wordpress.org/plugins/rewrite-rules-inspector/",
+	"support": {
+		"issues": "https://github.com/Automattic/Rewrite-Rules-Inspector/issues",
+		"source": "https://github.com/Automattic/Rewrite-Rules-Inspector"
+	},
 	"require": {
 		"php": ">=7.4",
-		"composer/installers": "^1 || ^2"
+		"composer/installers": "^1.0 || ^2.0"
 	},
 	"require-dev": {
-		"rector/rector": "^1.2"
+		"automattic/vipwpcs": "^3.0",
+		"php-parallel-lint/php-parallel-lint": "^1.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"phpunit/phpunit": "^9",
+		"rector/rector": "^2.2",
+		"yoast/wp-test-utils": "^1.2"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Automattic\\RewriteRulesInspector\\Tests\\": "tests/"
+		}
 	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true
-		}
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"coverage": "@php ./vendor/bin/phpunit --coverage-html ./build/coverage-html",
+		"coverage-ci": "@php ./vendor/bin/phpunit",
+		"cs": "@php ./vendor/bin/phpcs -q",
+		"cs-fix": "@php ./vendor/bin/phpcbf -q",
+		"i18n": "@php wp i18n make-pot . ./languages/rewrite-rules-inspector.pot",
+		"lint": "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git",
+		"lint-ci": "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git --checkstyle",
+		"test:unit": "@php ./vendor/bin/phpunit --testsuite Unit",
+		"test:integration": "wp-env run tests-cli --env-cwd=wp-content/plugins/Rewrite-Rules-Inspector ./vendor/bin/phpunit --testsuite WP_Tests",
+		"test:integration-ms": "wp-env run tests-cli --env-cwd=wp-content/plugins/Rewrite-Rules-Inspector /bin/bash -c 'WP_MULTISITE=1 ./vendor/bin/phpunit --testsuite WP_Tests'"
+	},
+	"scripts-descriptions": {
+		"coverage": "Run tests with code coverage reporting",
+		"coverage-ci": "Run tests with code coverage reporting and send results to stdout",
+		"cs": "Run PHP Code Sniffer",
+		"cs-fix": "Run PHP Code Sniffer and fix violations",
+		"i18n": "Generate a POT file for translation",
+		"lint": "Run PHP linting",
+		"lint-ci": "Run PHP linting and send results to stdout",
+		"test:unit": "Run unit tests",
+		"test:integration": "Run integration tests",
+		"test:integration-ms": "Run integration tests in multisite mode"
 	}
 }
