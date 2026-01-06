@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-01-06
+
+Minimum WordPress version is now 6.4.
+
+### Changed
+
+- chore: bump minimum WordPress version to 6.4 by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/61
+
+### Documentation
+
+- docs: add detailed explanation for "Flush Rules" functionality in README by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/59
+
+### Maintenance
+
+- chore: add wp-env configuration for local development by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/60
+- chore: standardise .editorconfig file by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/62
+- chore: normalise composer.json by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/63
+- chore: standardise .gitignore and add .distignore by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/64
+- ci: add Dependabot, lint scripts, and test infrastructure by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/64
+- Composer(deps-dev): update rector/rector requirement from ^1.2 to ^2.2 by @dependabot in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/66
+- Actions(deps): bump actions/checkout in the actions group by @dependabot in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/65
+- chore: add CODEOWNERS file and migrate Dependabot reviewers by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/67
+- ci: add integration test workflow and consolidate test bootstrap by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/68
+
 ## [1.5.1] - 2025-10-14
 
 ### Fixed
@@ -81,6 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Filter by different sources of rewrite rules.
 - An error message appears if rewrite rules are missing in the database.
 
+[1.6.0]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.5.1...1.6.0
 [1.5.1]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.3.1...1.4.0
