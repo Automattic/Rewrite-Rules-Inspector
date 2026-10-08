@@ -63,7 +63,7 @@ composer rector            # Run Rector for code modernisation suggestions
 Follow the standards documented in `~/code/plugin-standards/` for full details. Key points:
 
 - **Commits**: Use the `/commit` skill. Favour explaining "why" over "what".
-- **PRs**: Use the `/pr` skill. Squash and merge by default.
+- **PRs**: Use the `/pr` skill. PRs land as merge commits (squash and rebase merging are disabled), and every commit must be signed.
 - **Branch naming**: `feature/description`, `fix/description` from `develop`.
 - **Testing**: Write integration tests for WordPress-dependent behaviour, unit tests for isolated logic. Use `Yoast\WPTestUtils\WPIntegration\TestCase` for integration, `Yoast\WPTestUtils\BrainMonkey\YoastTestCase` for unit.
 - **Code style**: WordPress coding standards via PHPCS. Tabs for indentation.
