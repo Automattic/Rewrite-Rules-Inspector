@@ -19,6 +19,7 @@
 AGENTS.md
 CHANGELOG.md
 CONTRIBUTING.md
+SECURITY.md
 composer.json
 composer.lock
 package.json
