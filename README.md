@@ -101,7 +101,7 @@ Use the "Flush Rules" button when:
 2. Test a URL against the rules to see which one(s) would match, and the priority they would match in.  
    ![Showing the URL test results](.wordpress-org/screenshot-2.png)
 
-3. Limit rules and URL testing results down to specificrule sources.  
+3. Limit rules and URL testing results down to specific rule sources.  
    ![Showing the URL test results when no rules from that source match](.wordpress-org/screenshot-3.png)
 
 4. See which permastructs WordPress knows about.  
@@ -109,4 +109,4 @@ Use the "Flush Rules" button when:
 
 ## Changelog
 
-See the [change log](https://github.com/automattic/Rewrite-Rules-Inspector/blob/master/CHANGELOG.md).
+See the [change log](https://github.com/Automattic/Rewrite-Rules-Inspector/blob/main/CHANGELOG.md).
