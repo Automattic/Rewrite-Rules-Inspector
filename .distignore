@@ -16,6 +16,7 @@
 .wp-env.json
 .wp-env.override.json
 CHANGELOG.md
+CONTRIBUTING.md
 composer.json
 composer.lock
 package.json
