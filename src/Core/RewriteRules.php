@@ -87,6 +87,7 @@ final class RewriteRules {
 	/**
 	 * Generate rules once and observe the final rules for each source.
 	 *
+	 * @since 1.6.1
 	 * @param \WP_Rewrite $wp_rewrite WordPress rewrite object.
 	 * @return array Generated rules and source attribution.
 	 */
