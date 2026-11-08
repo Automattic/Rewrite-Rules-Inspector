@@ -28,7 +28,10 @@ class RewriteRulesSearchTest extends TestCase {
 	 */
 	public function test_search_input( string $input, bool $matches_article, string $home ): void {
 		$this->set_permalink_structure( '' );
-		update_option( 'home', $home );
+		$home_url = static function () use ( $home ) {
+			return $home;
+		};
+		add_filter( 'home_url', $home_url );
 		$previous_get = $_GET;
 		$_GET         = array( 's' => $input );
 		$fixture      = static function () {
@@ -55,6 +58,7 @@ class RewriteRulesSearchTest extends TestCase {
 		} finally {
 			$_GET = $previous_get;
 			remove_filter( 'rri_rewrite_rules', $fixture );
+			remove_filter( 'home_url', $home_url );
 		}
 	}
 
