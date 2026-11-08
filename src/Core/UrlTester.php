@@ -25,10 +25,10 @@ final class UrlTester {
 			$path = '';
 		}
 
-		// Remove WordPress subdirectory if the site is in a subdirectory.
-		$home_path = wp_parse_url( home_url(), PHP_URL_PATH );
-		if ( ! empty( $home_path ) ) {
-			$path = str_replace( $home_path, '', $path );
+		// Remove the home directory from the start of the path, as WordPress does when routing.
+		$home_path = untrailingslashit( (string) wp_parse_url( home_url(), PHP_URL_PATH ) );
+		if ( '' !== $home_path && 0 === stripos( $path . '/', $home_path . '/' ) ) {
+			$path = substr( $path, strlen( $home_path ) );
 		}
 
 		return ltrim( $path, '/' );
