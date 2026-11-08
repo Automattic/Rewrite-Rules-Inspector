@@ -26,8 +26,10 @@ class ActionAuthorizationTest extends TestCase {
 	 * @param string $action Action name.
 	 * @param string $role User role.
 	 * @param string $nonce Nonce mode.
+	 * @param string $structure Permalink structure.
 	 */
-	public function test_denied_requests( string $action, string $role, string $nonce ): void {
+	public function test_denied_requests( string $action, string $role, string $nonce, string $structure ): void {
+		$this->set_permalink_structure( $structure );
 		wp_set_current_user( '' === $role ? 0 : self::factory()->user->create( array( 'role' => $role ) ) );
 		$previous_request = $_REQUEST;
 		$_REQUEST         = array();
@@ -46,7 +48,8 @@ class ActionAuthorizationTest extends TestCase {
 			throw new RuntimeException( 'privileged work ran before authorization' );
 		};
 		add_filter( 'wp_die_handler', $die_handler );
-		add_action( 'generate_rewrite_rules', $unexpected_work );
+		// The option read precedes rule preparation even with plain permalinks.
+		add_filter( 'pre_option_rewrite_rules', $unexpected_work );
 		add_action( 'rri_flush_rules', $unexpected_work );
 
 		try {
@@ -60,7 +63,7 @@ class ActionAuthorizationTest extends TestCase {
 		} finally {
 			$_REQUEST = $previous_request;
 			remove_filter( 'wp_die_handler', $die_handler );
-			remove_action( 'generate_rewrite_rules', $unexpected_work );
+			remove_filter( 'pre_option_rewrite_rules', $unexpected_work );
 			remove_action( 'rri_flush_rules', $unexpected_work );
 		}
 	}
@@ -78,7 +81,12 @@ class ActionAuthorizationTest extends TestCase {
 			$cases[ $action . ' invalid nonce' ] = array( $action, 'administrator', 'invalid' );
 			$cases[ $action . ' subscriber' ]    = array( $action, 'subscriber', 'valid' );
 		}
-		return $cases;
+		$permalink_cases = array();
+		foreach ( $cases as $name => $case ) {
+			$permalink_cases[ $name . ' plain permalinks' ]  = array_merge( $case, array( '' ) );
+			$permalink_cases[ $name . ' pretty permalinks' ] = array_merge( $case, array( '/%postname%/' ) );
+		}
+		return $permalink_cases;
 	}
 
 	/**
