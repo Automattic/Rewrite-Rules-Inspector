@@ -53,6 +53,7 @@ final class FileExport {
 	/**
 	 * Authorize a download before preparing its data.
 	 *
+	 * @since 1.6.1
 	 * @return void
 	 */
 	public function authorize_download(): void {
