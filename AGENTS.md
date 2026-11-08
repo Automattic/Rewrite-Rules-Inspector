@@ -10,7 +10,7 @@ Debug and inspect WordPress rewrite rules.
 | **Text domain** | `rewrite-rules-inspector` |
 | **Namespace** | `Automattic\RewriteRulesInspector` |
 | **Source directory** | `src/` |
-| **Version** | 1.6.0 |
+| **Version** | 1.6.1 |
 | **Requires PHP** | 7.4+ |
 | **Requires WP** | 6.4+ |
 
