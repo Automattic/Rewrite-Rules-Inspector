@@ -1,8 +1,8 @@
 # Rewrite Rules Inspector
 
-Stable tag: 1.6.0  
+Stable tag: 1.6.1  
 Requires at least: 6.4  
-Tested up to: 6.9  
+Tested up to: 7.1  
 Requires PHP: 7.4  
 License: GPLv2 or later  
 Tags: rewrite rules, tools  
@@ -109,4 +109,17 @@ Use the "Flush Rules" button when:
 
 ## Changelog
 
-See the [change log](https://github.com/Automattic/Rewrite-Rules-Inspector/blob/main/CHANGELOG.md).
+The highlights of recent releases are below. Every change, including older releases, is listed in [CHANGELOG.md](https://github.com/Automattic/Rewrite-Rules-Inspector/blob/main/CHANGELOG.md).
+
+### 1.6.1
+
+- **Security:** Rule downloads now check permissions before doing any work, and the plugin's files no longer cause errors when requested directly.
+- **Fixed:** Searching for a URL on a site installed in a subdirectory now tests the right path.
+- **Fixed:** The rules list and the URL test result now agree on which rules a URL matches.
+- **Changed:** The inspector page generates the rewrite rules once instead of twice, so it loads faster.
+
+## Upgrade Notice
+
+### 1.6.1
+
+Security and bug fix release. Rule downloads now check permissions before doing any work, and URL searches match the path WordPress actually routes, including on sites installed in a subdirectory.

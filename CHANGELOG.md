@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-11-08
+
+### Changed
+
+- The inspector now generates the rewrite rules once per page load instead of twice, and attributes each rule to its source from the rules WordPress actually generated. by @sjinks in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/87
+
+### Fixed
+
+- The URL tester no longer emits PHP warnings for URLs without a path, such as `https://example.com`, or for URLs it can't parse. by @sjinks in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/83
+- Searching for a URL now filters the rules list and tests the URL against the same path, the one WordPress routes. The query string and fragment are ignored, protocol-relative URLs work, and on sites installed in a subdirectory only the leading home directory is removed, so `/blog/blogroll/` is no longer tested as `roll/`. by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/91
+
+### Security
+
+- Rule download requests now check the nonce and the user's capability before preparing any rules, and a search URL that can't be parsed no longer causes a fatal error. by @sjinks in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/84 and https://github.com/Automattic/Rewrite-Rules-Inspector/pull/88
+- Requesting the main plugin file or the list table class directly now exits quietly instead of causing a fatal error that could reveal the server path. by @sjinks and @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/85
+- Rule downloads now send the `X-Content-Type-Options: nosniff` header, so browsers don't guess the file's content type. by @sjinks in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/86
+
+### Maintenance
+
+- Releases are now published automatically from the tag, with the changelog entry as the release notes and an installable ZIP attached, and the WordPress.org deploy runs from the same tag. by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/92
+- The unit test suite now loads the plugin's classes, so `composer test:unit` passes again. by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/90
+- Integration tests now run on the PHP version each CI job is named for, including the minimum, PHP 7.4, and also run against WordPress 7.1. by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/94
+- Add contributing and security guides, and adopt the shared Automattic security policy, which takes vulnerability reports through HackerOne. by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/80 and https://github.com/Automattic/Rewrite-Rules-Inspector/pull/81
+- Add `AGENTS.md` with guidance for AI coding agents. by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/73
+- Leave development files out of release archives and the WordPress.org package. by @GaryJones in https://github.com/Automattic/Rewrite-Rules-Inspector/pull/71
+- Update GitHub Actions dependencies. by @dependabot
+
 ## [1.6.0] - 2026-01-06
 
 Minimum WordPress version is now 6.4.
@@ -105,6 +132,7 @@ Minimum WordPress version is now 6.4.
 - Filter by different sources of rewrite rules.
 - An error message appears if rewrite rules are missing in the database.
 
+[1.6.1]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.5.1...1.6.0
 [1.5.1]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/Automattic/Rewrite-Rules-Inspector/compare/1.4.0...1.5.0

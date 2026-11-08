@@ -10,7 +10,7 @@ Debug and inspect WordPress rewrite rules.
 | **Text domain** | `rewrite-rules-inspector` |
 | **Namespace** | `Automattic\RewriteRulesInspector` |
 | **Source directory** | `src/` |
-| **Version** | 1.6.0 |
+| **Version** | 1.6.1 |
 | **Requires PHP** | 7.4+ |
 | **Requires WP** | 6.4+ |
 
@@ -60,10 +60,10 @@ composer rector            # Run Rector for code modernisation suggestions
 
 ## Conventions
 
-Follow the standards documented in `~/code/plugin-standards/` for full details. Key points:
+See `CONTRIBUTING.md` for setup, checks and the contribution workflow. Key points:
 
-- **Commits**: Use the `/commit` skill. Favour explaining "why" over "what".
-- **PRs**: Use the `/pr` skill. PRs land as merge commits (squash and rebase merging are disabled), and every commit must be signed.
+- **Commits**: Every commit must be signed; `develop` and `main` reject unsigned commits. Use a [Conventional Commits](https://www.conventionalcommits.org/) prefix (`fix:`, `feat:`, `test:`, `docs:`, `ci:`, `chore:` and so on) with an imperative subject of about 50 characters, and a body that explains why the change was needed rather than what changed. One concern per commit.
+- **PRs**: Open against `develop`. The title describes the outcome in sentence case, without a conventional commit prefix. The description explains the problem first, then how the PR solves it. PRs land as merge commits (squash and rebase merging are disabled), so every commit message reaches `develop` as written.
 - **Branch naming**: `feature/description`, `fix/description` from `develop`.
 - **Testing**: Write integration tests for WordPress-dependent behaviour, unit tests for isolated logic. Use `Yoast\WPTestUtils\WPIntegration\TestCase` for integration, `Yoast\WPTestUtils\BrainMonkey\YoastTestCase` for unit.
 - **Code style**: WordPress coding standards via PHPCS. Tabs for indentation.
