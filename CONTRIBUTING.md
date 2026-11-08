@@ -70,4 +70,4 @@ Unit tests live in `tests/Unit/` and run without WordPress loaded. Integration t
 
 ## Releases
 
-Maintainers cut releases from a `release/x.y.z` branch into `main`. Publishing the GitHub release deploys the plugin to WordPress.org.
+Maintainers cut releases from a `release/x.y.z` branch into `main`. Pushing the version tag on `main` publishes the GitHub release, with the `CHANGELOG.md` entry as its notes and an installable ZIP attached, and deploys the plugin to WordPress.org.
