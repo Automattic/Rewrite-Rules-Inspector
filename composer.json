@@ -28,6 +28,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
+			"Automattic\\RewriteRulesInspector\\": "src/",
 			"Automattic\\RewriteRulesInspector\\Tests\\": "tests/"
 		}
 	},
