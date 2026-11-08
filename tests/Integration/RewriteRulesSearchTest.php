@@ -75,6 +75,8 @@ class RewriteRulesSearchTest extends TestCase {
 			'missing host'            => array( 'http://:', false, 'http://example.org' ),
 			'host without path'       => array( 'http://example.org', false, 'http://example.org' ),
 			'relative path'           => array( 'articles/', true, 'http://example.org' ),
+			'relative path and query' => array( 'articles/?q=1', true, 'http://example.org' ),
+			'protocol-relative URL'   => array( '//example.org/articles/', true, 'http://example.org' ),
 			'absolute URL'            => array( 'http://example.org/articles/?q=1', true, 'http://example.org' ),
 			'subdirectory path'       => array( '/blog/articles/', true, 'http://example.org/blog' ),
 			'subdirectory URL'        => array( 'http://example.org/blog/articles/', true, 'http://example.org/blog' ),

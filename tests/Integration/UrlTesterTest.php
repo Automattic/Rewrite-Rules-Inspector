@@ -34,11 +34,13 @@ class UrlTesterTest extends TestCase {
 	 */
 	public static function url_provider(): array {
 		return array(
-			'host only'     => array( 'https://example.com', '' ),
-			'absolute URL'  => array( 'https://example.com/articles/post?x=1', 'articles/post' ),
-			'relative path' => array( 'articles/post', 'articles/post' ),
-			'query only'    => array( '?x=1', '?x=1' ),
-			'invalid URL'   => array( 'http://:', '' ),
+			'host only'                => array( 'https://example.com', '' ),
+			'absolute URL'             => array( 'https://example.com/articles/post?x=1', 'articles/post' ),
+			'protocol-relative URL'    => array( '//example.com/articles/post', 'articles/post' ),
+			'relative path'            => array( 'articles/post', 'articles/post' ),
+			'relative path with query' => array( 'articles/post?x=1#top', 'articles/post' ),
+			'query only'               => array( '?x=1', '' ),
+			'invalid URL'              => array( 'http://:', '' ),
 		);
 	}
 }

@@ -160,32 +160,12 @@ final class RewriteRules {
 	 * @return string The search path.
 	 */
 	private function get_search_path(): string {
-		$match_path = '';
-		
-		if ( ! empty( $_GET['s'] ) ) {
-			$input = sanitize_text_field( $_GET['s'] );
-			
-			// If the input doesn't start with http:// or https://, treat it as a path.
-			if ( ! preg_match( '/^https?:\/\//', $input ) ) {
-				$match_path = $input;
-			} else {
-				$match_path = wp_parse_url( esc_url( $input ), PHP_URL_PATH );
-			}
-			
-			// Ensure we have a string value.
-			if ( ! is_string( $match_path ) ) {
-				$match_path = '';
-			}
-			
-			$wordpress_subdir_for_site = wp_parse_url( home_url(), PHP_URL_PATH );
-			if ( ! empty( $wordpress_subdir_for_site ) ) {
-				$match_path = str_replace( $wordpress_subdir_for_site, '', $match_path );
-			}
-
-			$match_path = ltrim( $match_path, '/' );
+		if ( empty( $_GET['s'] ) ) {
+			return '';
 		}
 
-		return $match_path;
+		// Use the same path as the URL tester so filtering and testing agree.
+		return ( new UrlTester() )->get_path( sanitize_text_field( $_GET['s'] ) );
 	}
 
 	/**
