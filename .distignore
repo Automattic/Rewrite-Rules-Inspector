@@ -1,6 +1,8 @@
 # Directories
+/.claude/
 /.git/
 /.github/
+/.wordpress-org/
 /bin/
 /node_modules/
 /tests/
@@ -14,9 +16,12 @@
 .phpcs.xml.dist
 .wp-env.json
 .wp-env.override.json
+AGENTS.md
 CHANGELOG.md
+CONTRIBUTING.md
 composer.json
 composer.lock
 package.json
 package-lock.json
 phpunit.xml.dist
+rector.php

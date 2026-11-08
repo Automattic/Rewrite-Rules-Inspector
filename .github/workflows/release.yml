@@ -1,0 +1,83 @@
+name: Create GitHub Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions: {}
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Create distribution ZIP
+        run: |
+          # The WordPress.org slug differs from the repository name in case, and
+          # the ZIP's top-level directory must match it, or the ZIP installs
+          # alongside an existing copy instead of updating it.
+          PLUGIN_SLUG="rewrite-rules-inspector"
+
+          # Stage outside the checkout. A destination inside the source has
+          # rsync copy the staging directory into itself.
+          mkdir -p "$RUNNER_TEMP/dist/$PLUGIN_SLUG"
+
+          # Copy files, respecting .distignore.
+          rsync -rc --exclude-from=".distignore" ./ "$RUNNER_TEMP/dist/$PLUGIN_SLUG/"
+
+          cd "$RUNNER_TEMP/dist"
+          zip -r "$RUNNER_TEMP/${PLUGIN_SLUG}.zip" "$PLUGIN_SLUG"
+
+      - name: Prepare release title and notes
+        id: prep
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          set -u
+
+          # Strip an optional leading "v" from the tag (v1.2.3 -> 1.2.3).
+          VERSION="${VERSION#v}"
+
+          # Title: "<Plugin Name> <version>", read from the main plugin file header.
+          PLUGIN_NAME="$(grep -h 'Plugin Name:' -- *.php | head -n1 | sed -E 's/.*Plugin Name:[[:space:]]*//; s/[[:space:]]*$//')"
+          echo "title=${PLUGIN_NAME} ${VERSION}" >> "$GITHUB_OUTPUT"
+
+          # Notes: the CHANGELOG entry for this version, without its "## [x.y.z] - date"
+          # heading, and with "###" subsections promoted to "##".
+          awk -v ver="$VERSION" '
+            $0 ~ ("^## \\[?" ver "(\\]| |$)") { found = 1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md | sed -E 's/^### /## /' > notes.raw
+
+          # Trim leading and trailing blank lines.
+          awk 'NF { seen = 1 } seen' notes.raw | tac | awk 'NF { seen = 1 } seen' | tac > notes.md
+
+          if [ -s notes.md ]; then
+            echo "have_notes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "have_notes=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::No CHANGELOG entry found for ${VERSION}; falling back to auto-generated notes."
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
+        with:
+          name: ${{ steps.prep.outputs.title }}
+          body_path: ${{ steps.prep.outputs.have_notes == 'true' && 'notes.md' || '' }}
+          generate_release_notes: ${{ steps.prep.outputs.have_notes != 'true' }}
+          files: ${{ runner.temp }}/*.zip
+          draft: false
+          # A hyphenated tag (1.2.3-beta1) is a pre-release, so GitHub should not
+          # badge it "Latest".
+          prerelease: ${{ contains(github.ref_name, '-') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

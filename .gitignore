@@ -7,6 +7,7 @@
 
 # Tests
 /.phpunit.cache/
+/.phpunit.result.cache
 
 # Local config overrides
 /.phpcs.xml
