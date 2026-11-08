@@ -25,8 +25,8 @@ final class UrlTester {
 		$parsed_url = wp_parse_url( $url );
 		$path = $parsed_url['path'] ?? '/';
 		
-		// If wp_parse_url returns null for path, treat the input as a path.
-		if ( null === $parsed_url['path'] && ! preg_match( '/^https?:\/\//', $url ) ) {
+		// Preserve path-like input only when parsing succeeded.
+		if ( false !== $parsed_url && ! isset( $parsed_url['path'] ) && ! preg_match( '/^https?:\/\//', $url ) ) {
 			$path = $url;
 		}
 
@@ -97,8 +97,8 @@ final class UrlTester {
 		$parsed_url = wp_parse_url( $url );
 		$path = $parsed_url['path'] ?? '/';
 		
-		// If wp_parse_url returns null for path, treat the input as a path.
-		if ( null === $parsed_url['path'] && ! preg_match( '/^https?:\/\//', $url ) ) {
+		// Preserve path-like input only when parsing succeeded.
+		if ( false !== $parsed_url && ! isset( $parsed_url['path'] ) && ! preg_match( '/^https?:\/\//', $url ) ) {
 			$path = $url;
 		}
 
