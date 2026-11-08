@@ -96,11 +96,18 @@ class ActionAuthorizationTest extends TestCase {
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
 		$previous_request     = $_REQUEST;
 		$_REQUEST['_wpnonce'] = wp_create_nonce( 'download-rules' );
+		$verified             = array();
+		$record_verification  = static function ( $action, $result ) use ( &$verified ) {
+			$verified[ $action ] = $result;
+		};
+		add_action( 'check_admin_referer', $record_verification, 10, 2 );
 		try {
+			// A denial would reach wp_die() and fail the test.
 			( new FileExport() )->authorize_download();
-			$this->assertTrue( current_user_can( 'manage_options' ) );
+			$this->assertSame( array( 'download-rules' => 1 ), $verified );
 		} finally {
 			$_REQUEST = $previous_request;
+			remove_action( 'check_admin_referer', $record_verification );
 		}
 	}
 
