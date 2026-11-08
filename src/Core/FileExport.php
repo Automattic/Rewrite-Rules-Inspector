@@ -61,6 +61,7 @@ final class FileExport {
 	 * @param string $filename The filename for the download.
 	 */
 	private function set_download_headers( string $filename ): void {
+		send_nosniff_header();
 		header( 'Content-Type: text/plain' );
 		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
 	}
