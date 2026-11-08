@@ -1,7 +1,11 @@
 name: Deploy to WordPress.org
 on:
-  release:
-    types: [released]
+  # Trigger on the tag, not the release: release.yml publishes the release with
+  # GITHUB_TOKEN, and events raised by that token don't start other workflows.
+  push:
+    tags:
+      - '*'
+      - '!*-*' # Skip pre-releases (1.2.3-beta1). Negative patterns must follow the positive one.
   # Allow manual triggering of the workflow.
   workflow_dispatch:
 
