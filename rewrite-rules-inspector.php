@@ -22,6 +22,11 @@
  * GitHub Plugin URI: https://github.com/Automattic/Rewrite-Rules-Inspector
  */
 
+// Stop direct requests before calling WordPress functions.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.6.0' ); // Unused for now.
 define( 'REWRITE_RULES_INSPECTOR_FILE_PATH', plugin_basename( __FILE__ ) );
 
