@@ -174,7 +174,7 @@ final class RewriteRules {
 			}
 			
 			// Ensure we have a string value.
-			if ( null === $match_path ) {
+			if ( ! is_string( $match_path ) ) {
 				$match_path = '';
 			}
 			
