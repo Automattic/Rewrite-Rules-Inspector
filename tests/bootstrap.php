@@ -39,7 +39,7 @@ if ( $is_integration ) {
 
 	if ( empty( $_tests_dir ) ) {
 		echo 'ERROR: Could not find WordPress test library directory.' . PHP_EOL;
-		echo 'Make sure wp-env is running: npm run wp-env start' . PHP_EOL;
+		echo 'Make sure wp-env is running: npm ci && npx --no wp-env start' . PHP_EOL;
 		exit( 1 );
 	}
 

@@ -40,3 +40,19 @@ updates:
       include: "scope"
     open-pull-requests-limit: 5
     versioning-strategy: increase-if-necessary
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    groups:
+      dev-dependencies:
+        patterns:
+          - "@wordpress/*"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "npm"
+      include: "scope"
+    open-pull-requests-limit: 5
