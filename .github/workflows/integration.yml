@@ -39,7 +39,7 @@ jobs:
 
     env:
       WP_ENV_CORE: WordPress/WordPress#${{ matrix.wordpress }}
-      # Without this, the tests container uses the PHP version in .wp-env.json,
+      # Without this, wp-env uses the PHP version in .wp-env.json,
       # whatever the matrix says.
       WP_ENV_PHP_VERSION: ${{ matrix.php }}
 
