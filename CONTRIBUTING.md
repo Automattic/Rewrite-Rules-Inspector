@@ -20,6 +20,7 @@ This project follows the [Automattic Code of Conduct](https://automattic.com/cod
 2. Install dependencies:
    ```bash
    composer install
+   npm ci
    ```
 3. Start the WordPress environment:
    ```bash
