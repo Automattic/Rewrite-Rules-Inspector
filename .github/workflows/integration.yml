@@ -53,7 +53,7 @@ jobs:
             php: '8.5'
           # Check the next WP version, with the latest PHP.
           - wordpress: 'master'
-            php: '8.5'
+            php: '8.6'
       fail-fast: false
 
     steps:
